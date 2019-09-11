@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cake.Model
+namespace StarBucks.Core
 {
-    class Member
+    public class Class1
     {
     }
 }

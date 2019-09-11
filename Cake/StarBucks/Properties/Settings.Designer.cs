@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Cake.Properties
+namespace StarBucks.Properties
 {
 
 
