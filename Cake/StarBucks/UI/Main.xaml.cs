@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarBucks.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,25 @@ namespace StarBucks.UI
         public Main()
         {
             InitializeComponent();
+            this.Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            App.SeatData.Load();
+
+            AddSeatitems();
+        }
+
+        private void AddSeatitems()
+        {
+           foreach(Seat seat in App.SeatData.lstSeat)
+            {
+                SeatControl seatControl = new SeatControl();
+                seatControl.Setseat(seat);
+
+                lstSeat.Items.Add(seatControl);
+            }
         }
     }
 }
