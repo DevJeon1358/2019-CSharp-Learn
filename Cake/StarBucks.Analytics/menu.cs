@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cake.Model
+namespace StarBucks.Analytics
 {
-    class Member
+    public class menu
     {
+        
     }
 }
