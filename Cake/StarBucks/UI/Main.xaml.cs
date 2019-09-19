@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace StarBucks.UI
 {
@@ -31,6 +32,7 @@ namespace StarBucks.UI
             App.SeatData.Load();
 
             AddSeatitems();
+            StartTime();
         }
 
         private void AddSeatitems()
@@ -42,6 +44,19 @@ namespace StarBucks.UI
 
                 lstSeat.Items.Add(seatControl);
             }
+        }
+
+        private void StartTime()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += Timer_Tick;
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            dClock.Text = DateTime.Now.ToString();
         }
     }
 }
