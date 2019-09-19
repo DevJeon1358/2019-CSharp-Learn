@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace StarBucks.Analytics
 {
-    public class Class1
+    public class menu
     {
+        
     }
 }
