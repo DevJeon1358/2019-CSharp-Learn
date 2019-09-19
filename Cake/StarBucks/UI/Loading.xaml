@@ -1,0 +1,15 @@
+﻿<Window x:Name="window" x:Class="StarBucks.UI.Loading"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StarBucks.UI"
+        mc:Ignorable="d"
+        Title="StarBucks" Height="450" Width="800" 
+        AllowsTransparency="True" WindowStyle="None" 
+        Background="#212121" ResizeMode="NoResize" Opacity="0"
+        Loaded="Window_Loaded" Topmost="True" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Image Source="Assets/logo.png" Width="200" />
+    </Grid>
+</Window>
