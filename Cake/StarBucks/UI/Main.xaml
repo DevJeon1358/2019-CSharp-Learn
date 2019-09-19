@@ -4,9 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StarBucks.UI"
+        xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Main" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#212121">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="Assets/logo.png"
+                       Margin="10,0,0,0"
+                       Width="70"/>
+            </StackPanel>
+
+            <TextBlock 
+                Text="{Binding Mode=OneWay, 
+                    Source={x:Static wookoa:DateTime.Now}, 
+                    StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}" 
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Foreground="#efefef"
+                Margin="0,0,10,0"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            
+            <ListView x:Name="lstSeat"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+            </ListView>
+            
+        </Grid>
         
     </Grid>
 </Window>
