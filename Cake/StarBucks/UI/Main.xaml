@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StarBucks.UI"
-        xmlns:wookoa="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="Main" Height="450" Width="800">
     <Grid>
@@ -21,9 +20,7 @@
             </StackPanel>
 
             <TextBlock 
-                Text="{Binding Mode=OneWay, 
-                    Source={x:Static wookoa:DateTime.Now}, 
-                    StringFormat=\{0:yyyy-MM-dd HH:mm:ss\}}" 
+                Name="dClock" 
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right"
                 Foreground="#efefef"
