@@ -9,6 +9,7 @@ namespace StarBucks
 {
     public class SeatDataSource
     {
+        private readonly int TABLE_MAX = 6;
         bool isLoaded = false;
         public List<Seat> lstSeat = null;
 
@@ -16,18 +17,31 @@ namespace StarBucks
         {
             if (isLoaded) return;
 
-            lstSeat = new List<Seat>()
+            if(lstSeat == null)
             {
-                new Seat() {Id = 1},
-                new Seat() {Id = 2},
-                new Seat() {Id = 3},
-                new Seat() {Id = 4},
-                new Seat() {Id = 5},
-                new Seat() {Id = 6}
+                lstSeat = new List<Seat>();
+            }
 
-            };
+            for (int i = 0; i < TABLE_MAX; i++)
+            {
+                Seat seat = new Seat();
+                seat.Id = i;
+                lstSeat.Add(seat);
+            }
+
+            //lstSeat = new List<Seat>()
+            //{
+            //    new Seat() {Id = 1},
+            //    new Seat() {Id = 2},
+            //    new Seat() {Id = 3},
+            //    new Seat() {Id = 4},
+            //    new Seat() {Id = 5},
+            //    new Seat() {Id = 6}
+            //};
 
             isLoaded = true;
         }
+
+
     }
 }
