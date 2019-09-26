@@ -11,6 +11,8 @@ namespace StarBucks.UI
     /// </summary>
     public partial class Loading : Window
     {
+        Main main = new Main();
+
         public Loading()
         {
             InitializeComponent();
@@ -18,16 +20,19 @@ namespace StarBucks.UI
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Thread.Sleep(3000);
-            openMainWindow();
+            Task.Run(delegate {
+                Thread.Sleep(3000);
+                openMainWindow();
+            });
         }
 
         private void openMainWindow()
         {
-            Main main = new Main();
-
-            main.Show();
-            this.Close();
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                main.Show();
+                this.Close();
+            }));
         }
     }
 }
