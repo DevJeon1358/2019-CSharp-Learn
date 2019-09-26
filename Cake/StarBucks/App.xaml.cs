@@ -14,5 +14,6 @@ namespace StarBucks
     public partial class App : Application
     {
         public static SeatDataSource SeatData = new SeatDataSource();
+        public static DrinkDataSource DrinkData = new DrinkDataSource();
     }
 }
