@@ -22,7 +22,7 @@ namespace StarBucks
                 lstSeat = new List<Seat>();
             }
 
-            for (int i = 0; i < TABLE_MAX; i++)
+            for (int i = 1; i <= TABLE_MAX; i++)
             {
                 Seat seat = new Seat();
                 seat.Id = i;
