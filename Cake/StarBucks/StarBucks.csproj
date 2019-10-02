@@ -59,6 +59,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DrinkControl.xaml.cs">
+      <DependentUpon>DrinkControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DrinkDataSource.cs" />
+    <Compile Include="OrderControl.xaml.cs">
+      <DependentUpon>OrderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SeatControl.xaml.cs">
+      <DependentUpon>SeatControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SeatDataSource.cs" />
     <Compile Include="UI\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
     </Compile>
@@ -93,6 +104,18 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="DrinkControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OrderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SeatControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,6 +127,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\Assets\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StarBucks.Analytics\StarBucks.Analytics.csproj">
+      <Project>{50189801-84f2-44a7-930d-3a8bee57d26b}</Project>
+      <Name>StarBucks.Analytics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StarBucks.Core\StarBucks.Core.csproj">
+      <Project>{7d3a8eee-fc84-442b-91ee-f30de595fa38}</Project>
+      <Name>StarBucks.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
