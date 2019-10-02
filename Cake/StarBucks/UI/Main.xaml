@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StarBucks.UI"
+        xmlns:local1="clr-namespace:StarBucks"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="Main" Height="800" Width="1400">
     <Grid>
@@ -31,7 +32,8 @@
             
             <ListView x:Name="lstSeat"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                      SelectionChanged="LstSeat_SelectionChanged">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"/>
@@ -40,6 +42,10 @@
             </ListView>
             
         </Grid>
-        
+
+        <local1:OrderControl x:Name="orderControl"
+                             Grid.Row="0" Grid.RowSpan="2"
+                             Visibility="Collapsed"/>
+        <!--Grid.Row만 활성화하고 Row 2개를 합쳐!! -->
     </Grid>
 </Window>
