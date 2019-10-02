@@ -40,7 +40,21 @@ namespace StarBucks.Database
             }
 
             CurrentConnection = new SQLiteConnection("Data Source=" + filePath);
+            CurrentConnection.Open();
             return CurrentConnection;
+        }
+
+        /// <summary>
+        /// 연결된 SQL Connection에 Query 를 수행합니다.
+        /// </summary>
+        /// <example>ExcuteQuery("select * from table;")</example>
+        /// <param name="sql">SQL Query</param>
+        /// <returns>Effected Row Count</returns>
+        public int ExcuteQuery(String sql)
+        {
+            SQLiteCommand sqlCommand = new SQLiteCommand(sql, CurrentConnection);
+
+            return sqlCommand.ExecuteNonQuery();
         }
     }
 }
