@@ -59,17 +59,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DrinkControl.xaml.cs">
+    <Compile Include="UI\DrinkControl.xaml.cs">
       <DependentUpon>DrinkControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DrinkDataSource.cs" />
-    <Compile Include="OrderControl.xaml.cs">
+    <Compile Include="UI\DrinkDataSource.cs" />
+    <Compile Include="UI\OrderControl.xaml.cs">
       <DependentUpon>OrderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SeatControl.xaml.cs">
+    <Compile Include="UI\SeatControl.xaml.cs">
       <DependentUpon>SeatControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SeatDataSource.cs" />
+    <Compile Include="UI\SeatDataSource.cs" />
     <Compile Include="UI\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
     </Compile>
@@ -104,15 +104,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="DrinkControl.xaml">
+    <Page Include="UI\DrinkControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OrderControl.xaml">
+    <Page Include="UI\OrderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SeatControl.xaml">
+    <Page Include="UI\SeatControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
