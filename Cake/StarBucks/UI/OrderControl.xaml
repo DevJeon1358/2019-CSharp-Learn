@@ -15,7 +15,7 @@
             <Grid Grid.Row="0"
               Background="#f6f5ef">
                 <StackPanel Orientation="Horizontal">
-                    <Image Source="UI/Assets/logo.png"
+                    <Image Source="Assets/logo.png"
                        Width="80"
                        Margin="24, 0, 24, 0"/>
                     <ListBox VerticalAlignment="Center"
