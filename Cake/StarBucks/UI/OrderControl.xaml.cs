@@ -24,6 +24,7 @@ namespace StarBucks
         public OrderControl()
         {
             InitializeComponent();
+            this.Loaded += OrderControl_Loaded;
         }
 
         private void OrderControl_Loaded(object sender, RoutedEventArgs e)
