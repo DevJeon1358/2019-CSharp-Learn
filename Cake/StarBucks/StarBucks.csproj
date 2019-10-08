@@ -138,5 +138,20 @@
       <Name>StarBucks.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Assets\Espresso\라벤더 카페 브레베.jpg" />
+    <Resource Include="UI\Assets\Espresso\블론드 에스프레소 토닉.jpg" />
+    <Resource Include="UI\Assets\Espresso\아이스 블랙 글레이즈드 라떼.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Assets\ColdBrew\나이트로 콜드 브루.jpg" />
+    <Resource Include="UI\Assets\ColdBrew\돌체 콜드 브루.jpg" />
+    <Resource Include="UI\Assets\ColdBrew\바닐라 크림 콜드 브루.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Assets\Frappuccino\제주 쑥떡 크림 프라푸치노.jpg" />
+    <Resource Include="UI\Assets\Frappuccino\초콜릿 크림 프라푸치노.jpg" />
+    <Resource Include="UI\Assets\Frappuccino\화이트 딸기 크림 프라푸치노.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
