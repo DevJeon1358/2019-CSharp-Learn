@@ -76,7 +76,7 @@ namespace StarBucks.UI
             MainEventArgs args = new MainEventArgs(); //핸들러 선언
             args.id = id; //핸들러의 id에 seat id 넣기
 
-            //이거랑 같아 OnComplete?.Invoke(this, null);
+            //같다. OnComplete?.Invoke(this, null);
             if (OnComplete != null) //누군가 핸들러를 등록했다면 
             {
                 OnComplete(this, args); //이벤트 발생,(this, 파라미터[seat id])
