@@ -21,6 +21,9 @@ namespace StarBucks
     /// </summary>
     public partial class OrderControl : UserControl
     {
+
+        public List<Drink> OrderedDrink { get; set; }
+
         public OrderControl()
         {
             InitializeComponent();
@@ -30,7 +33,8 @@ namespace StarBucks
         private void OrderControl_Loaded(object sender, RoutedEventArgs e)
         {
             App.DrinkData.Load();
-
+            OrderedDrink = new List<Drink>();
+            
             AddListItems();
         }
 
@@ -40,11 +44,11 @@ namespace StarBucks
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
-
+                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
         }
-        
+
         private void Select_All(object sender, RoutedEventArgs e)   // 전체 메뉴 선택시
         {
             lvDrink.Items.Clear();
@@ -61,7 +65,7 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
             string category = "콜드브루";
-            App.DrinkData.set(category);
+            App.DrinkData.Set(category);
 
             foreach (Drink drink in App.DrinkData.listTest)
             {
@@ -75,7 +79,7 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
             string category = "에스프레소";
-            App.DrinkData.set(category);
+            App.DrinkData.Set(category);
 
             foreach (Drink drink in App.DrinkData.listTest)
             {
@@ -89,7 +93,7 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
             string category = "프라푸치노";
-            App.DrinkData.set(category);
+            App.DrinkData.Set(category);
 
             foreach (Drink drink in App.DrinkData.listTest)
             {
@@ -98,6 +102,13 @@ namespace StarBucks
 
                 lvDrink.Items.Add(drinkControl);
             }
+        }
+
+        private void OnMouseDowndrink(Drink drink)
+        {
+            OrderedDrink.Add(drink);
+            selectedDrink.ItemsSource = null;
+            selectedDrink.ItemsSource = OrderedDrink;
         }
     }
 }
