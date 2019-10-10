@@ -43,7 +43,7 @@ namespace StarBucks
                 listDrink[i].Category = "프라푸치노";
             }
         }
-        public void set(string a)
+        public void Set(string a)
         {
             if (listDrink == null)
                 return;

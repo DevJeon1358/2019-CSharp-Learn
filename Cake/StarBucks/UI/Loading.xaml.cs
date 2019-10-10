@@ -22,11 +22,11 @@ namespace StarBucks.UI
         {
             Task.Run(delegate {
                 Thread.Sleep(3000);
-                openMainWindow();
+                OpenMainWindow();
             });
         }
 
-        private void openMainWindow()
+        private void OpenMainWindow()
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
