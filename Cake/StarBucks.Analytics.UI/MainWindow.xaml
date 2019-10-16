@@ -1,0 +1,63 @@
+﻿<Window x:Class="StarBucks.Analytics.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StarBucks.Analytics.UI"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <TabControl Height="auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <TabItem Header="Today">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Label x:Name="todayAmountLabel" Content="오늘 판매량: 000,000 원"/>
+                    <DataGrid x:Name="today" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" CanUserDeleteRows="False" CanUserAddRows="False" AutoGenerateColumns="False" IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="메뉴명" Binding="{Binding paymentfor}" Width="130"/>
+                            <DataGridTextColumn Header="결제수단" Binding="{Binding paymentMethodText}" Width="70"/>
+                            <DataGridTextColumn Header="판매 가격" Binding="{Binding paymentAmount}" Width="*"/>
+                            <DataGridTextColumn Header="판매 시간" Binding="{Binding paymentDate}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+                <Grid Grid.Column="1">
+                    <lvc:CartesianChart x:Name="today_chart" Margin="10,0,0,0" LegendLocation="None" Height="auto" >
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="판매량"/>
+                        </lvc:CartesianChart.AxisY>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis x:Name="today_chart_X" Title="시간"/>
+                        </lvc:CartesianChart.AxisX>
+                    </lvc:CartesianChart>
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Menu">
+            <StackPanel Background="#FFE5E5E5" Height="auto">
+                <DataGrid x:Name="menu" HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" CanUserDeleteRows="False" CanUserAddRows="False" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="메뉴명" Binding="{Binding paymentfor}" Width="300"/>
+                        <DataGridTextColumn Header="결제수단" Binding="{Binding paymentMethodText}" Width="100"/>
+                        <DataGridTextColumn Header="판매 가격" Binding="{Binding paymentAmount}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="Category">
+            <StackPanel Background="#FFE5E5E5" Height="auto">
+                <DataGrid x:Name="category" HorizontalAlignment="Left" VerticalAlignment="Top" Height="auto" CanUserDeleteRows="False" CanUserAddRows="False" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Cateogry" Binding="{Binding category}" Width="300"/>
+                        <DataGridTextColumn Header="결제수단" Binding="{Binding paymentMethodText}" Width="100"/>
+                        <DataGridTextColumn Header="판매 가격" Binding="{Binding paymentAmount}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window>

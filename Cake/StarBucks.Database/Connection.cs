@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Data;
 
 namespace StarBucks.Database
 {
@@ -13,7 +13,7 @@ namespace StarBucks.Database
         {
             set
             {
-                if(_CurrentConnection == null)
+                if (_CurrentConnection == null)
                 {
                     _CurrentConnection = value;
                 }
@@ -53,7 +53,7 @@ namespace StarBucks.Database
         /// <returns>Effected Row Count</returns>
         public int ExcuteQuery(String sql)
         {
-            if(CurrentConnection == null)
+            if (CurrentConnection == null)
             {
                 throw new ConnectException("DB 연결이 초기화 되지 않았습니다.");
             }
@@ -80,7 +80,7 @@ namespace StarBucks.Database
             SQLiteDataAdapter adpt = new SQLiteDataAdapter(sql, CurrentConnection);
 
             adpt.Fill(ds);
-            
+
             return ds;
         }
     }
