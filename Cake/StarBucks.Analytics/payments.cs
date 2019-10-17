@@ -8,11 +8,10 @@ namespace StarBucks.Analytics
 {
     public class payments
     {
-        // Jeon.G.Y (@DevJeon1358)
-        // 오늘 일자 결제 금액을 불러옴
-        public string getTodayMoney()
+        public enum paymentMethod
         {
-            return "";
+            CARD = 1,
+            CASH = 2,
         }
     }
 }
