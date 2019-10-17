@@ -83,6 +83,12 @@ namespace StarBucks.UI
             }
             orderControl.Visibility = Visibility.Visible;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            analytics analytics = new analytics();
+            analytics.Show();
+        }
     }
 }
 
