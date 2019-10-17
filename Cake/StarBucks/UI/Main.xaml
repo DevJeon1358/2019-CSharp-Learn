@@ -18,6 +18,11 @@
                 <Image Source="Assets/logo.png"
                        Margin="10,0,0,0"
                        Width="70"/>
+
+                <Button Width="100"
+                        Margin="30,20"
+                        Content="통계보기" Click="Button_Click"
+                        />
             </StackPanel>
 
             <TextBlock 
