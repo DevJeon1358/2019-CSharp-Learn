@@ -21,9 +21,10 @@ namespace StarBucks
     /// </summary>
     public partial class DrinkControl : UserControl
     {
-        public delegate void OnMouseDownHandler(Drink drink);
+        public delegate void OnMouseDownHandler(Drink drink, Seat seat);
         public OnMouseDownHandler OnMouseDownDrink;
         private Drink drink = new Drink();
+        private Seat seat = new Seat();
         public DrinkControl()
         {
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace StarBucks
 
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            OnMouseDownDrink?.Invoke(drink);
+            OnMouseDownDrink?.Invoke(drink, seat);
         }
     }
 }

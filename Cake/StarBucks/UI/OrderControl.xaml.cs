@@ -22,7 +22,7 @@ namespace StarBucks
     public partial class OrderControl : UserControl
     {
 
-        public List<Drink> OrderedDrink { get; set; }
+        public List<Drink> OrderedDrink { get; set; }       
 
         public OrderControl()
         {
@@ -34,7 +34,7 @@ namespace StarBucks
         {
             App.DrinkData.Load();
             OrderedDrink = new List<Drink>();
-            
+
             AddListItems();
         }
 
@@ -57,7 +57,7 @@ namespace StarBucks
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
-
+                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
         }
@@ -71,7 +71,7 @@ namespace StarBucks
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
-
+                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
         }
@@ -85,7 +85,7 @@ namespace StarBucks
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
-
+                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
         }
@@ -99,16 +99,47 @@ namespace StarBucks
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
-
+                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
         }
 
-        private void OnMouseDowndrink(Drink drink)
+        private void OnMouseDowndrink(Drink drink, Seat seat)
         {
-            OrderedDrink.Add(drink);
-            selectedDrink.ItemsSource = null;
+            var temp = OrderedDrink.Where(x => x.Name == drink.Name).FirstOrDefault();
+            drink.Count++;
+
+            if (temp == null)
+            {
+                OrderedDrink.Add(drink);
+                seat.lstDrink.Add(drink);
+            }
+
+            totalPrice.Text = seat.Total + "원";
+
             selectedDrink.ItemsSource = OrderedDrink;
+            selectedDrink.Items.Refresh();
+        }
+
+        private void PlusDrink(object sender, RoutedEventArgs e)
+        {
+            DrinkControl drinkControl = new DrinkControl();
+            drinkControl.OnMouseDownDrink += OnMouseDowndrink;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
