@@ -6,6 +6,32 @@
              xmlns:local="clr-namespace:StarBucks"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style x:Key="OrderedNameStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="OrderedPriceStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="OrderedCountStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="NavTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Margin" Value="0 0 0 4"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -65,42 +91,99 @@
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" BorderBrush="#212121" BorderThickness="8 8 8 5">
                     <Grid Grid.Row="0">
-
-                        <ListView x:Name="selectedDrink" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="80"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45"/>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="" x:Name="TableId"/>
+                            <TextBlock Text="테이블의 주문 내역" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Border BorderBrush="#212121" Opacity="0.45" BorderThickness="0 0 0 1"/>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="270"/>
+                                    <ColumnDefinition Width="67"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" BorderBrush="#212121" BorderThickness="0 0 1 0">
+                                    <TextBlock Text="이름" Style="{StaticResource NavTextBlockStyle}"/>
+                                </Border>
+                                <Border Grid.Column="1" BorderBrush="#212121" BorderThickness="0 0 1 0">
+                                    <TextBlock Text="가격" Style="{StaticResource NavTextBlockStyle}"/>
+                                </Border>
+                                <Border Grid.Column="2" BorderBrush="#212121" BorderThickness="0 0 1 0">
+                                    <TextBlock Text="수량" Style="{StaticResource NavTextBlockStyle}"/>
+                                </Border>
+                                <Border Grid.Column="3" BorderBrush="#212121" BorderThickness="0 0 1 0">
+                                    <TextBlock Text="추가/제거" Style="{StaticResource NavTextBlockStyle}"/>
+                                </Border>
+                            </Grid>
+                        </Grid>
+                        
+                        <Border BorderBrush="#212121" BorderThickness="0 0 0 4"/>
+                        
+                        <ListView x:Name="selectedDrink" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="100"/>
-                                            <ColumnDefinition Width="40"/>
-                                            <ColumnDefinition Width="30"/>
-                                            <ColumnDefinition Width="20"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Column="0">
-                                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                    <Border BorderBrush="SlateGray" BorderThickness="0 0 0 2">
+                                        <Grid Margin="0 4 0 6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="270"/>
+                                                <ColumnDefinition Width="57"/>
+                                                <ColumnDefinition Width="55"/>
+                                                <ColumnDefinition Width="88"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <TextBlock Text="{Binding Name}" Style="{StaticResource OrderedNameStyle}"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <TextBlock Text="{Binding Price}" Style="{StaticResource OrderedPriceStyle}"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="2">
+                                                <TextBlock Text="{Binding Count}" Style="{StaticResource OrderedCountStyle}"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="3">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Button MouseDown="PlusDrink" Width="30" Height="40" Margin="0 0 3 0">+</Button>
+                                                    <Button Click="Button_Click_1" Width="30">-</Button>
+                                                </StackPanel>
+                                            </Grid>
                                         </Grid>
-                                        <Grid Grid.Column="1">
-                                            <TextBlock Text="{Binding Price}"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="2">
-                                            <TextBlock Text="{Binding Count}"></TextBlock>
-                                        </Grid>
-                                        <Grid Grid.Column="3">
-                                            <Button>+</Button>
-                                            <Button>-</Button>
-                                        </Grid>
-                                    </Grid>
+                                    </Border>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <TextBlock Margin="0 8 0 0" Text="주문 내역" FontSize="24" HorizontalAlignment="Center"></TextBlock>
-
                     </Grid>
                 </Border>
 
                 <Border Grid.Row="1" BorderBrush="#212121" BorderThickness="8 5 8 8">
                     <Grid Grid.Row="1">
-                        
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="총 합계 : " VerticalAlignment="Center" Margin="20 0 0 0" FontSize="30" FontWeight="DemiBold"/>
+                            <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="30" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                        </Grid>
+                        <Border BorderBrush="#212121" BorderThickness="0 2 0 0" Grid.Row="1">
+                            <Grid>
+                                <TextBlock Text="결제 수단 :" Margin="10 0 0 0" FontSize="30" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Click="Button_Click_2" Width="120" Height="50" Margin="190 0 0 0" FontSize="20" FontWeight="DemiBold">현금</Button>
+                                    <Button Click="Button_Click_3" Width="120" Height="50" Margin="25 0 0 0" FontSize="20" FontWeight="DemiBold">카드</Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
             </Grid>
