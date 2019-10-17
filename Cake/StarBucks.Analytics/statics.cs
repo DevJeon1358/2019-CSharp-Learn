@@ -22,12 +22,12 @@ namespace StarBucks.Analytics
         private void initTable()
         {
             connection.ExcuteQuery("CREATE TABLE IF NOT EXISTS payment " +
-                "( Id INTEGER primary key, category INTEGER not null, paymentMethod INTEGER not null, paymentfor VARCHAR(50) not null, paymentAmount INTEGER not null );");
+                "( Id INTEGER primary key, category VARCHAR(50) not null, paymentMethod VARCHAR(10) not null, paymentfor VARCHAR(50) not null, paymentAmount INTEGER not null, paymentDate STRING not null );");
         }
 
-        public void addPayment(String payMenu, int category, int payMethod, int payAmount)
+        public void addPayment(string payMenu, string category, payments.paymentMethod payMethod, int payAmount, string payTime)
         {
-            connection.ExcuteQuery("INSERT INTO payment VALUES (" + category + ", " + payMethod + ", " + payMenu +")," + payAmount + ");");   
+            connection.ExcuteQuery("INSERT INTO payment (category, paymentMethod, paymentfor, paymentAmount, paymentDate) VALUES ('" + category + "', '" + payMethod + "', '" + payMenu +"', '" + payAmount + "', '" + payTime + "');");   
         }
 
         public DataSet getPaymentByCategory(int category)
@@ -35,9 +35,19 @@ namespace StarBucks.Analytics
             return connection.ExcuteQueryAndGetData("SELECT * FROM payment WHERE category =" + category + ";");
         }
 
-        public DataSet getPaymentByMenu(String paymenu)
+        public DataSet getPaymentByMenu(string paymenu)
         {
             return connection.ExcuteQueryAndGetData("SELECT * FROM payment WHERE paymentfor =" + paymenu + ";");
+        }
+
+        //public DataSet getTodayPayment()
+        //{
+        //    return connection.ExcuteQueryAndGetData("SELECT * FROM payment where paymentDate >=" + DateTime.Today.CompareTo(DateTime.Parse("2019-10-17")) + " && paymentDate <" + DateTime.Today.AddDays(1) + ";");
+        //}
+
+        public DataSet getPayments()
+        {
+            return connection.ExcuteQueryAndGetData("SELECT * FROM payment;");
         }
     }
 }
