@@ -12,6 +12,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarBucks.Database", "StarBucks.Database\StarBucks.Database.csproj", "{44F9821E-758B-4E74-B7A7-B9319D9B1DD7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarBucks.Analytics.UI", "StarBucks.Analytics.UI\StarBucks.Analytics.UI.csproj", "{4C3249F3-B83B-4343-8A64-F9994F4C292F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{44F9821E-758B-4E74-B7A7-B9319D9B1DD7} = {44F9821E-758B-4E74-B7A7-B9319D9B1DD7}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
