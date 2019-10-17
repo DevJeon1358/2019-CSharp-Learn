@@ -6,14 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace StarBucks
+namespace StarBucks.Analytics.UI
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        public static SeatDataSource SeatData = new SeatDataSource();
-        public static DrinkDataSource DrinkData = new DrinkDataSource();
     }
 }

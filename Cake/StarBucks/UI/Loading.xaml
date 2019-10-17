@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="StarBucks" Height="450" Width="800" 
         AllowsTransparency="True" WindowStyle="None" 
-        Background="#212121" ResizeMode="NoResize" Opacity="0"
+        ResizeMode="NoResize" Opacity="1"
         Loaded="Window_Loaded" Topmost="True" WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Background="#212121">
         <Image Source="Assets/logo.png" Width="200" />
     </Grid>
 </Window>
