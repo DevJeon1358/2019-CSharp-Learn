@@ -168,5 +168,10 @@ namespace StarBucks
             totalPrice.Text = "";
             AddListItems();
         }
+
+        private void AllClear_Click(object sender, RoutedEventArgs e)
+        {
+            InitOrderControl();
+        }
     }
 }

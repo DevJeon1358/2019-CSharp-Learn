@@ -104,7 +104,7 @@
                                 <TextBlock Text="" x:Name="tableId"/>
                                 <TextBlock Text="테이블의 주문 내역" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                                <Button x:Name="allClear" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 8 0" >전체삭제</Button> 
+                                <Button x:Name="allClear" Click="AllClear_Click" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 8 0" >전체삭제</Button> 
                                 <Border BorderBrush="#212121" Opacity="0.45" BorderThickness="0 0 0 1"/>
                             </Grid>
 
@@ -178,7 +178,7 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="총 합계 : " VerticalAlignment="Center" Margin="20 0 0 0" FontSize="30" FontWeight="DemiBold"/>
-                            <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="14" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="30" FontWeight="DemiBold" VerticalAlignment="Center"/>
                         </Grid>
                         <Border BorderBrush="#212121" BorderThickness="0 2 0 0" Grid.Row="1">
                             <Grid>
