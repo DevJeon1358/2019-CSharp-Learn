@@ -43,8 +43,11 @@ namespace StarBucks.UI
         {
             // 주문이 완료됨
             int idx = args.id;
-            List <Drink> drinks = args.orderedDrinks;
-            return;
+            var item = App.SeatData.lstSeat.Where(x => x.Id == idx).FirstOrDefault();
+            item.lstDrink = args.orderedDrinks;
+
+            lstSeat.Items.Clear();
+            AddSeatitems();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
