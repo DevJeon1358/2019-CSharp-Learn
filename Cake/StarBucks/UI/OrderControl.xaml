@@ -138,24 +138,28 @@
                                     <Border BorderBrush="SlateGray" BorderThickness="0 0 0 2">
                                         <Grid Margin="0 4 0 6">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="270"/>
-                                                <ColumnDefinition Width="57"/>
+                                                <ColumnDefinition Width="40"/>
+                                                <ColumnDefinition Width="220"/>
+                                                <ColumnDefinition Width="65"/>
                                                 <ColumnDefinition Width="55"/>
                                                 <ColumnDefinition Width="88"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
-                                                <TextBlock Text="{Binding Name}" Style="{StaticResource OrderedNameStyle}"></TextBlock>
+                                                <Button x:Name="selectClear" Click="SelectClear_Click" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center">X</Button>
                                             </Grid>
                                             <Grid Grid.Column="1">
-                                                <TextBlock Text="{Binding Price}" Style="{StaticResource OrderedPriceStyle}"></TextBlock>
+                                                <TextBlock Text="{Binding Name}" Style="{StaticResource OrderedNameStyle}"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="2">
-                                                <TextBlock Text="{Binding Count}" Style="{StaticResource OrderedCountStyle}"></TextBlock>
+                                                <TextBlock Text="{Binding Price}" Style="{StaticResource OrderedPriceStyle}"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="3">
+                                                <TextBlock Text="{Binding Count}" Style="{StaticResource OrderedCountStyle}"></TextBlock>
+                                            </Grid>
+                                            <Grid Grid.Column="4">
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Button x:Name="plus" Click="PlusMinusDrink" Width="30" Height="40" Margin="0 0 3 0">+</Button>
-                                                    <Button x:Name="minus" Click="PlusMinusDrink" Width="30">-</Button>
+                                                    <Button x:Name="plus" Click="PlusMinusDrink" FontSize="20" Width="40" Height="40" Margin="0 0 5 0">+</Button>
+                                                    <Button x:Name="minus" Click="PlusMinusDrink" FontSize="20" Width="40" Padding="0 0 0 3">-</Button>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>

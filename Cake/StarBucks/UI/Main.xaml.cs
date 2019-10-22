@@ -90,7 +90,15 @@ namespace StarBucks.UI
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            App.analytics.Show();
+            try
+            {
+                App.analytics.Show();
+            }
+            catch (Exception)
+            {
+                App.analytics = new analytics();
+                App.analytics.Show();
+            }
         }
     }
 }
