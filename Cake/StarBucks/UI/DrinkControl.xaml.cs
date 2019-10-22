@@ -21,7 +21,10 @@ namespace StarBucks
     /// </summary>
     public partial class DrinkControl : UserControl
     {
+        public delegate void OnMouseDownHandler(Drink drink, Seat seat);
+        public OnMouseDownHandler OnMouseDownDrink;
         private Drink drink = new Drink();
+        private Seat seat = new Seat();
         public DrinkControl()
         {
             InitializeComponent();
@@ -32,6 +35,16 @@ namespace StarBucks
             tbName.Text = item.Name;
             DrinkImage.Source = new BitmapImage(new Uri(item.ImagePath, UriKind.Relative));
             tbPrice.Text = item.Price.ToString() + "원";
+        }
+
+        public int GetTotalPrice()
+        {
+            return drink.Price * drink.Count;
+        }
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            OnMouseDownDrink?.Invoke(drink, seat);
         }
     }
 }

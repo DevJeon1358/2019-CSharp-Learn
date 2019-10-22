@@ -13,5 +13,20 @@ namespace StarBucks.Core
         public List<Drink> lstDrink = new List<Drink>();
 
         public string OrderTime { get; set; }
+
+        public int Total
+        {
+            get
+            {
+                int retval = 0;
+
+                foreach(var item in lstDrink)
+                {
+                    retval += item.Count * item.Price;
+                }
+
+                return retval;
+            }
+        }
     }
 }
