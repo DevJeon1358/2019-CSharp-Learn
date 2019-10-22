@@ -12,9 +12,16 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using StarBucks.Analytics;
 using System;
+using StarBucks.UI;
 
 namespace StarBucks
 {
+    public class OrderEventArgs : EventArgs
+    {
+        public int id;
+        public List<Drink> orderedDrinks;
+    }
+
     /// <summary>
     /// Interaction logic for OrderControl.xaml
     /// </summary>
@@ -23,6 +30,11 @@ namespace StarBucks
         public List<Drink> OrderedDrink { get; set; }
         private List<Drink> Drinks = new List<Drink>();
         private statics statics;
+
+        public int tableIdx { get; set; }
+
+        public delegate void OrderHandler(object sender, OrderEventArgs args);
+        public event OrderHandler onOrder;
 
         public OrderControl()
         {
@@ -196,12 +208,21 @@ namespace StarBucks
 
         private void BackHome()     // 결제 시
         {
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
+            this.tableIdx = 0;
+
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
-        private void BackHome(object sender, RoutedEventArgs e)     // 뒤로가기 버튼 클릭 시
+        public void setOrderList(List<Drink> drinks)
+        {
+            this.OrderedDrink = drinks;
+        }
+
+        private void BackHome(object sender, RoutedEventArgs e)
         {
             InitOrderControl();
+            this.tableIdx = 0;
             this.Visibility = Visibility.Collapsed;
         }
 
