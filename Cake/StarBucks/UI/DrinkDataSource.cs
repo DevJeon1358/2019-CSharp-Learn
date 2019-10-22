@@ -43,13 +43,13 @@ namespace StarBucks
                 listDrink[i].Category = "프라푸치노";
             }
         }
-        public void Set(string a)
+        public List<Drink> getCategoryList(string a)
         {
             if (listDrink == null)
-                return;
+                return null;
 
             //listTest.Clear();
-            listTest = listDrink.Where(x => x.Category.Equals(a)).ToList();
+            return listDrink.Where(x => x.Category.Equals(a)).ToList();
         }
     }
 }

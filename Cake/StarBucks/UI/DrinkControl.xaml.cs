@@ -37,6 +37,11 @@ namespace StarBucks
             tbPrice.Text = item.Price.ToString() + "원";
         }
 
+        public int GetTotalPrice()
+        {
+            return drink.Price * drink.Count;
+        }
+
         private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             OnMouseDownDrink?.Invoke(drink, seat);
