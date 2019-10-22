@@ -15,5 +15,6 @@ namespace StarBucks
     {
         public static SeatDataSource SeatData = new SeatDataSource();
         public static DrinkDataSource DrinkData = new DrinkDataSource();
+        public static analytics analytics = new analytics();
     }
 }
