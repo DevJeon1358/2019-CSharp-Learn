@@ -208,6 +208,11 @@ namespace StarBucks
             this.Visibility = Visibility.Collapsed;
         }
 
+        public void setOrderList(List<Drink> drinks)
+        {
+            this.OrderedDrink = drinks;
+        };
+
         private void BackHome()
         {
             InitOrderControl();
