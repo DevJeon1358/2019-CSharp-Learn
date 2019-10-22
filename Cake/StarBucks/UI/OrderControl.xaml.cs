@@ -1,18 +1,8 @@
 ﻿using StarBucks.Core;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace StarBucks
 {
@@ -20,9 +10,10 @@ namespace StarBucks
     /// Interaction logic for OrderControl.xaml
     /// </summary>
     public partial class OrderControl : UserControl
-    {
+    { 
 
-        public List<Drink> OrderedDrink { get; set; }       
+        public List<Drink> OrderedDrink { get; set; }
+        private List<Drink> Drinks = new List<Drink>();
 
         public OrderControl()
         {
@@ -34,13 +25,24 @@ namespace StarBucks
         {
             App.DrinkData.Load();
             OrderedDrink = new List<Drink>();
-
+            initMenu();
             AddListItems();
+        }
+
+        private void initMenu()
+        {
+            Drinks.Clear();
+            foreach (var drink in App.DrinkData.listDrink)
+            {
+                Drinks.Add(drink.Clone());
+            }
         }
 
         private void AddListItems()
         {
-            foreach (Drink drink in App.DrinkData.listDrink)
+            lvDrink.Items.Clear();
+
+            foreach (Drink drink in Drinks)
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
@@ -53,7 +55,7 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
 
-            foreach (Drink drink in App.DrinkData.listDrink)
+            foreach (Drink drink in Drinks)
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
@@ -65,9 +67,9 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
             string category = "콜드브루";
-            App.DrinkData.Set(category);
+            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
 
-            foreach (Drink drink in App.DrinkData.listTest)
+            foreach (Drink drink in categoryDrinkList)
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
@@ -79,9 +81,9 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
             string category = "에스프레소";
-            App.DrinkData.Set(category);
+            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
 
-            foreach (Drink drink in App.DrinkData.listTest)
+            foreach (Drink drink in categoryDrinkList)
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
@@ -93,9 +95,9 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
             string category = "프라푸치노";
-            App.DrinkData.Set(category);
+            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
 
-            foreach (Drink drink in App.DrinkData.listTest)
+            foreach (Drink drink in categoryDrinkList)
             {
                 DrinkControl drinkControl = new DrinkControl();
                 drinkControl.SetItem(drink);
@@ -115,31 +117,56 @@ namespace StarBucks
                 seat.lstDrink.Add(drink);
             }
 
-            totalPrice.Text = seat.Total + "원";
+            int TotalPrice = 0;
+
+            foreach(var item in lvDrink.Items)
+            {
+                TotalPrice += (item as DrinkControl).GetTotalPrice();
+            }
+
+            totalPrice.Text = TotalPrice + "원";
 
             selectedDrink.ItemsSource = OrderedDrink;
             selectedDrink.Items.Refresh();
         }
 
-        private void PlusDrink(object sender, RoutedEventArgs e)
+        private void PlusMinusDrink(object sender, RoutedEventArgs e)
         {
-            DrinkControl drinkControl = new DrinkControl();
-            drinkControl.OnMouseDownDrink += OnMouseDowndrink;
+            var type = ((Button)sender).Name;
+
+            if (type == "plus")
+            {
+                
+            }
+            else
+            {
+
+            }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void cashPay(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void cardPay(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void BackHome(object sender, RoutedEventArgs e)
         {
+            InitOrderControl();
+            this.Visibility = Visibility.Collapsed;
+        }
 
+        private void InitOrderControl()
+        {
+            OrderedDrink.Clear();
+            initMenu();
+            OrderedDrink = new List<Drink>();
+            totalPrice.Text = "";
+            AddListItems();
         }
     }
 }

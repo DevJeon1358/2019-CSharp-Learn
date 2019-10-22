@@ -63,9 +63,9 @@
                         <ListBoxItem Selected="Select_ColdBrew" Foreground="DarkBlue" Content="콜드 브루 커피" Width="180" HorizontalContentAlignment="Center"/>
                         <ListBoxItem Selected="Select_Espresso" Foreground="SaddleBrown" Content="에스프레소" Width="150" HorizontalContentAlignment="Center"/>
                         <ListBoxItem Selected="Select_Frappuccino" Foreground="SandyBrown" Content="프라푸치노" Width="150" HorizontalContentAlignment="Center"/>
-
                     </ListBox>
                 </StackPanel>
+                <Button Click="BackHome" Content="뒤로가기" Width="130" Height="60" FontSize="28" FontWeight="Bold"  HorizontalAlignment="Right" Margin="0 0 20 0" />
             </Grid>
         </Border>
 
@@ -100,9 +100,14 @@
                                 <RowDefinition Height="45"/>
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="" x:Name="TableId"/>
-                            <TextBlock Text="테이블의 주문 내역" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                            <Border BorderBrush="#212121" Opacity="0.45" BorderThickness="0 0 0 1"/>
+                            <Grid Grid.Row="0">
+                                <TextBlock Text="" x:Name="tableId"/>
+                                <TextBlock Text="테이블의 주문 내역" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                                <Button x:Name="allClear" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 8 0" >전체삭제</Button> 
+                                <Border BorderBrush="#212121" Opacity="0.45" BorderThickness="0 0 0 1"/>
+                            </Grid>
+
                             <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="270"/>
@@ -149,8 +154,8 @@
                                             </Grid>
                                             <Grid Grid.Column="3">
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                    <Button MouseDown="PlusDrink" Width="30" Height="40" Margin="0 0 3 0">+</Button>
-                                                    <Button Click="Button_Click_1" Width="30">-</Button>
+                                                    <Button x:Name="plus" Click="PlusMinusDrink" Width="30" Height="40" Margin="0 0 3 0">+</Button>
+                                                    <Button x:Name="minus" Click="PlusMinusDrink" Width="30">-</Button>
                                                 </StackPanel>
                                             </Grid>
                                         </Grid>
@@ -173,14 +178,14 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="총 합계 : " VerticalAlignment="Center" Margin="20 0 0 0" FontSize="30" FontWeight="DemiBold"/>
-                            <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="30" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                            <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="14" FontWeight="DemiBold" VerticalAlignment="Center"/>
                         </Grid>
                         <Border BorderBrush="#212121" BorderThickness="0 2 0 0" Grid.Row="1">
                             <Grid>
                                 <TextBlock Text="결제 수단 :" Margin="10 0 0 0" FontSize="30" FontWeight="Bold" VerticalAlignment="Center"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Click="Button_Click_2" Width="120" Height="50" Margin="190 0 0 0" FontSize="20" FontWeight="DemiBold">현금</Button>
-                                    <Button Click="Button_Click_3" Width="120" Height="50" Margin="25 0 0 0" FontSize="20" FontWeight="DemiBold">카드</Button>
+                                    <Button Click="cashPay" Width="120" Height="50" Margin="190 0 0 0" FontSize="20" FontWeight="DemiBold">현금</Button>
+                                    <Button Click="cardPay" Width="120" Height="50" Margin="25 0 0 0" FontSize="20" FontWeight="DemiBold">카드</Button>
                                 </StackPanel>
                             </Grid>
                         </Border>

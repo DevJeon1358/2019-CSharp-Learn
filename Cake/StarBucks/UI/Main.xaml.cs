@@ -70,6 +70,10 @@ namespace StarBucks.UI
 
         private void LstSeat_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (lstSeat.SelectedIndex == -1)
+            {
+                return;
+            }
             SeatControl seatControl = lstSeat.SelectedItem as SeatControl; //선택된 SeatCtrl에서 
             int id = seatControl.GetSeatId(); // seat id를 가져오기
 
@@ -82,8 +86,8 @@ namespace StarBucks.UI
                 OnComplete(this, args); //이벤트 발생,(this, 파라미터[seat id])
             }
             orderControl.Visibility = Visibility.Visible;
+            lstSeat.SelectedIndex = -1;
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             analytics analytics = new analytics();
