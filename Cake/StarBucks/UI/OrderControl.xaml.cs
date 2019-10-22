@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using StarBucks.Analytics;
+using System;
 
 namespace StarBucks
 {
@@ -161,12 +162,6 @@ namespace StarBucks
 
         private void cardPay(object sender, RoutedEventArgs e)
         {
-            //DB에 주문내역 전달,결제타입은 현금
-            addPayment(OrderedDrink, payments.paymentMethod.CARD);
-        }
-
-        private void Card(object sender, RoutedEventArgs e) //카드결제 시 대단해여!! 이거 매뉴 하나 하나씩 보내줘야함 라때 2개 => 라때, 라때 총 2개 전송 :)
-        {
             //DB에 주문내역 전달,결제타입은 카드
             addPayment(OrderedDrink, payments.paymentMethod.CARD);
         }
@@ -175,7 +170,7 @@ namespace StarBucks
         {
             if (MessageBox.Show("결제하시겠습니까?", "안내", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                // DB에 값 전달(이름,카테고리,결제타입,amout?,결제시간)
+                // DB에 값 전달(이름,카테고리,결제타입,결제금액,결제시간)
                 foreach (Drink drink in OrderedDrink) 
                 {
                     for(int i= 0; i < drink.Count; i++)
@@ -184,13 +179,21 @@ namespace StarBucks
                         statics.addPayment(drink.Name, drink.Category, paymentMethod, drink.Price, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
                     }
                 }
-            }
 
-            // Analytics Window의 Data 를 Refresh 함
-            App.analytics.refreshData();
+                // Analytics Window의 Data 를 Refresh 함
+                App.analytics.refreshData();
+
+                BackHome();
+            }
         }
 
         private void BackHome(object sender, RoutedEventArgs e)
+        {
+            InitOrderControl();
+            this.Visibility = Visibility.Collapsed;
+        }
+
+        private void BackHome()
         {
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
