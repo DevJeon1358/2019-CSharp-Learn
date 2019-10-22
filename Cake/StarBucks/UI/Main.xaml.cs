@@ -34,6 +34,15 @@ namespace StarBucks.UI
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
+            orderControl.onOrder += OrderControl_onOrder;
+        }
+
+        private void OrderControl_onOrder(object sender, OrderEventArgs args)
+        {
+            // 주문이 완료됨
+            int idx = args.id;
+            List <Drink> drinks = args.orderedDrinks;
+            return;
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -86,6 +95,10 @@ namespace StarBucks.UI
                 OnComplete(this, args); //이벤트 발생,(this, 파라미터[seat id])
             }
             orderControl.Visibility = Visibility.Visible;
+
+            // Table 번호
+            orderControl.tableIdx = 0;
+
             lstSeat.SelectedIndex = -1;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
