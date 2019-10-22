@@ -152,11 +152,6 @@ namespace StarBucks
             selectedDrink.Items.Refresh();
         }
 
-        private void OnPlusMinusClick(Drink drink, Seat seat)
-        {
-
-        }
-
         private void PlusMinusDrink(object sender, RoutedEventArgs e)   // plus minus 버튼 클릭 시 이벤트
         {
             var type = ((Button)sender).Name;

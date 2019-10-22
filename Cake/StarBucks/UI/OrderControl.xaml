@@ -138,14 +138,14 @@
                                     <Border BorderBrush="SlateGray" BorderThickness="0 0 0 2">
                                         <Grid Margin="0 4 0 6">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="40"/>
-                                                <ColumnDefinition Width="220"/>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="244"/>
                                                 <ColumnDefinition Width="65"/>
                                                 <ColumnDefinition Width="55"/>
                                                 <ColumnDefinition Width="88"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
-                                                <Button x:Name="selectClear" Click="SelectClear_Click" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center">X</Button>
+                                                <Button x:Name="selectClear" Click="SelectClear_Click" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center">X</Button>
                                             </Grid>
                                             <Grid Grid.Column="1">
                                                 <TextBlock Text="{Binding Name}" Style="{StaticResource OrderedNameStyle}"></TextBlock>
@@ -172,27 +172,44 @@
 
                 <Border Grid.Row="1" BorderBrush="#212121" BorderThickness="8 5 8 8">
                     <Grid Grid.Row="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid Grid.Row="0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="총 합계 : " VerticalAlignment="Center" Margin="20 0 0 0" FontSize="30" FontWeight="DemiBold"/>
-                            <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="30" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Border BorderBrush="#212121" BorderThickness="0 0 2 0"/>
+                            <!--<ListView x:Name="selectImage">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>-->
                         </Grid>
-                        <Border BorderBrush="#212121" BorderThickness="0 2 0 0" Grid.Row="1">
-                            <Grid>
-                                <TextBlock Text="결제 수단 :" Margin="10 0 0 0" FontSize="30" FontWeight="Bold" VerticalAlignment="Center"/>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Click="cashPay" Width="120" Height="50" Margin="190 0 0 0" FontSize="20" FontWeight="DemiBold">현금</Button>
-                                    <Button Click="cardPay" Width="120" Height="50" Margin="25 0 0 0" FontSize="20" FontWeight="DemiBold">카드</Button>
-                                </StackPanel>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="총 합계 : " VerticalAlignment="Center" Margin="20 0 0 0" FontSize="25" FontWeight="DemiBold"/>
+                                <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Center"/>
                             </Grid>
-                        </Border>
+                            <Border BorderBrush="#212121" BorderThickness="0 2 0 0" Grid.Row="1">
+                                <Grid>
+                                    <TextBlock Text="결제 수단 :" Margin="10 0 0 0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Click="cashPay" Width="90" Height="30" Margin="130 0 0 0" FontSize="15" FontWeight="DemiBold">현금</Button>
+                                        <Button Click="cardPay" Width="90" Height="30" Margin="15 0 0 0" FontSize="15" FontWeight="DemiBold">카드</Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                        
                     </Grid>
                 </Border>
             </Grid>
