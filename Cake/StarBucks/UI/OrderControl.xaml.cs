@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using StarBucks.Analytics;
+using System;
 
 namespace StarBucks
 {
@@ -11,14 +20,15 @@ namespace StarBucks
     /// </summary>
     public partial class OrderControl : UserControl
     { 
-
         public List<Drink> OrderedDrink { get; set; }
         private List<Drink> Drinks = new List<Drink>();
+        private statics statics;
 
         public OrderControl()
         {
             InitializeComponent();
             this.Loaded += OrderControl_Loaded;
+            statics = new statics();
         }
 
         private void OrderControl_Loaded(object sender, RoutedEventArgs e)
@@ -146,15 +156,44 @@ namespace StarBucks
 
         private void cashPay(object sender, RoutedEventArgs e)
         {
-
+            //DB에 주문내역 전달,결제타입은 현금
+            addPayment(OrderedDrink, payments.paymentMethod.CASH);
         }
 
         private void cardPay(object sender, RoutedEventArgs e)
         {
+            //DB에 주문내역 전달,결제타입은 카드
+            addPayment(OrderedDrink, payments.paymentMethod.CARD);
+        }
 
+        private void addPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
+        {
+            if (MessageBox.Show("결제하시겠습니까?", "안내", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                // DB에 값 전달(이름,카테고리,결제타입,결제금액,결제시간)
+                foreach (Drink drink in OrderedDrink) 
+                {
+                    for(int i= 0; i < drink.Count; i++)
+                    {
+                        //To-Do Connect Database using Starbucks.Analytics
+                        statics.addPayment(drink.Name, drink.Category, paymentMethod, drink.Price, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
+                    }
+                }
+
+                // Analytics Window의 Data 를 Refresh 함
+                App.analytics.refreshData();
+
+                BackHome();
+            }
         }
 
         private void BackHome(object sender, RoutedEventArgs e)
+        {
+            InitOrderControl();
+            this.Visibility = Visibility.Collapsed;
+        }
+
+        private void BackHome()
         {
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;

@@ -11,27 +11,34 @@ using StarBucks.Analytics;
 
 namespace StarBucks
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class analytics : Window
     {
+        #region Valuable
+
+        // Starbucks.Analytics 인스턴스
         statics stat;
 
+        // Background Worker 완료 유무를 확인하기 위한 변수
         private Boolean menuBackgroundWorkerFinished = false;
         private Boolean todayBackgroundWorkerFinished = false;
         private Boolean categoryBackgroundWorkerFinished = false;
 
+        #endregion
+
         public analytics()
         {
             InitializeComponent();
+
+            // StarBucks.Analytics 인스턴스 초기화
             stat = new statics();
 
-            stat.addPayment("TEST", "Category #2", payments.paymentMethod.CARD, 10000, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
+            // 차트 초기 설정
             initBaseChart();
         }
 
-        private async Task<DataSet> getMenuStatics()
+        #region Statics
+
+        private DataSet getMenuStatics()
         {
             DataSet ds = stat.getPayments();
 
@@ -89,7 +96,7 @@ namespace StarBucks
             return ds;
         }
 
-        private async Task<DataSet> getTodayStatics()
+        private DataSet getTodayStatics()
         {
             var todayAmount = 0;
             DataSet ds = stat.getPayments();
@@ -131,7 +138,7 @@ namespace StarBucks
             return ds;
         }
 
-        private async Task<DataSet> getCategoryStatics()
+        private DataSet getCategoryStatics()
         {
             DataSet ds = stat.getPayments();
 
@@ -188,6 +195,10 @@ namespace StarBucks
             return ds;
         }
 
+        #endregion
+
+        #region Charts
+
         private void initBaseChart()
         {
             var todayCollection = new SeriesCollection
@@ -232,7 +243,7 @@ namespace StarBucks
             this.category_chart.Series = categoryCollection;
         }
 
-        private async void initTodayChart(DataSet ds)
+        private void initTodayChart(DataSet ds)
         {
             var timeIdxCount = new int[24];
             var cardIdxCount = new int[24];
@@ -272,7 +283,7 @@ namespace StarBucks
             }));
         }
 
-        private async void initMenuChart(DataSet ds)
+        private void initMenuChart(DataSet ds)
         {
             var tempValue = new ChartValues<double> { };
 
@@ -298,7 +309,7 @@ namespace StarBucks
             }));
         }
 
-        private async void initCategoryChart(DataSet ds)
+        private void initCategoryChart(DataSet ds)
         {
             var tempValues = new ChartValues<double> { };
             var LabelsList = new List<String>();
@@ -323,13 +334,7 @@ namespace StarBucks
             }));
         }
 
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-            this.Loading.Visibility = Visibility.Visible;
-            refreshData();
-        }
-
-        private async void refreshData()
+        public void refreshData()
         {
             BackgroundWorker menuBackgroundWorker = new BackgroundWorker();
             BackgroundWorker todayBackgroundWorker = new BackgroundWorker();
@@ -348,21 +353,25 @@ namespace StarBucks
             categoryBackgroundWorker.RunWorkerAsync();
         }
 
-        private async void CategoryBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        #endregion
+
+        #region Background Workers
+
+        private void CategoryBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var categoryDataset = await getCategoryStatics();
+            var categoryDataset = getCategoryStatics();
             initCategoryChart(categoryDataset);
         }
 
-        private async void TodayBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void TodayBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var todayDataset = await getTodayStatics();
+            var todayDataset = getTodayStatics();
             initTodayChart(todayDataset);
         }
 
-        private async void MenuBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void MenuBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var menuDataset = await getMenuStatics();
+            var menuDataset = getMenuStatics();
             initMenuChart(menuDataset);
         }
 
@@ -396,6 +405,10 @@ namespace StarBucks
             menuBackgroundWorkerFinished = true;
         }
 
+        #endregion
+
+        #region Events
+
         private void onLoadFinished()
         {
             categoryBackgroundWorkerFinished = false;
@@ -407,5 +420,20 @@ namespace StarBucks
                 this.Loading.Visibility = Visibility.Hidden;
             }));
         }
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            this.Loading.Visibility = Visibility.Visible;
+            refreshData();
+        }
+
+        private void onRefreshClick(object sender, RoutedEventArgs e)
+        {
+            this.Loading.Visibility = Visibility.Visible;
+
+            refreshData();
+        }
+
+        #endregion
     }
 }
