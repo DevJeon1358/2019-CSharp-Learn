@@ -217,6 +217,7 @@ namespace StarBucks
         public void setOrderList(List<Drink> drinks)
         {
             this.OrderedDrink = drinks;
+            selectedDrink.Items.Refresh();
         }
 
         private void BackHome(object sender, RoutedEventArgs e)
