@@ -73,7 +73,7 @@ namespace StarBucks
             }
         }
 
-        private void Select_All(object sender, RoutedEventArgs e)   // 전체 메뉴 선택시
+        private void Select_All(object sender, RoutedEventArgs e)   // 전체 메뉴 선택 시
         {
             lvDrink.Items.Clear();
 
@@ -128,7 +128,7 @@ namespace StarBucks
             }
         }
 
-        private void OnMouseDowndrink(Drink drink, Seat seat)
+        private void OnMouseDowndrink(Drink drink, Seat seat)   // menu 클릭 시 OrderedDrink 리스트로 추가
         {
             var temp = OrderedDrink.Where(x => x.Name == drink.Name).FirstOrDefault();
             drink.Count++;
@@ -152,18 +152,25 @@ namespace StarBucks
             selectedDrink.Items.Refresh();
         }
 
-        private void PlusMinusDrink(object sender, RoutedEventArgs e)
+        private void OnPlusMinusClick(Drink drink, Seat seat)
+        {
+
+        }
+
+        private void PlusMinusDrink(object sender, RoutedEventArgs e)   // plus minus 버튼 클릭 시 이벤트
         {
             var type = ((Button)sender).Name;
 
-            if (type == "plus")
-            {
-                
-            }
-            else
-            {
 
-            }
+
+            //if (type == "plus")
+            //{
+                
+            //}
+            //else
+            //{
+
+            //}
         }
 
         private void cashPay(object sender, RoutedEventArgs e)
@@ -199,7 +206,7 @@ namespace StarBucks
             }
         }
 
-        private void BackHome(object sender, RoutedEventArgs e)
+        private void BackHome()     // 결제 시
         {
             onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
             this.tableIdx = 0;
@@ -207,13 +214,12 @@ namespace StarBucks
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
-
         public void setOrderList(List<Drink> drinks)
         {
             this.OrderedDrink = drinks;
         }
 
-        private void BackHome()
+        private void BackHome(object sender, RoutedEventArgs e)
         {
             InitOrderControl();
             this.tableIdx = 0;
@@ -223,6 +229,7 @@ namespace StarBucks
         private void InitOrderControl()
         {
             OrderedDrink.Clear();
+            selectedDrink.Items.Refresh();
             initMenu();
             OrderedDrink = new List<Drink>();
             totalPrice.Text = "";
@@ -232,6 +239,11 @@ namespace StarBucks
         private void AllClear_Click(object sender, RoutedEventArgs e)
         {
             InitOrderControl();
+        }
+
+        private void SelectClear_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
