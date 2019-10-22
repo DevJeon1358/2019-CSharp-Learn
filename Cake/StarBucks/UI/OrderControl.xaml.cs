@@ -211,7 +211,7 @@ namespace StarBucks
         public void setOrderList(List<Drink> drinks)
         {
             this.OrderedDrink = drinks;
-        };
+        }
 
         private void BackHome()
         {
