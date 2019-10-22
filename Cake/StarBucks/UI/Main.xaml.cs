@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.ComponentModel;
+
 
 namespace StarBucks.UI
 {
@@ -41,8 +43,11 @@ namespace StarBucks.UI
         {
             // 주문이 완료됨
             int idx = args.id;
-            List <Drink> drinks = args.orderedDrinks;
-            return;
+            var item = App.SeatData.lstSeat.Where(x => x.Id == idx).FirstOrDefault();
+            item.lstDrink = args.orderedDrinks;
+
+            lstSeat.Items.Clear();
+            AddSeatitems();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -97,7 +102,9 @@ namespace StarBucks.UI
             orderControl.Visibility = Visibility.Visible;
 
             // Table 번호
-            orderControl.tableIdx = 0;
+            orderControl.tableIdx = id;
+            var item = App.SeatData.lstSeat.Where(x => x.Id == id).FirstOrDefault();
+            orderControl.setOrderList(item.lstDrink);
 
             lstSeat.SelectedIndex = -1;
         }
