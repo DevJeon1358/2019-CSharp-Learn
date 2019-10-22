@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
+using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -12,10 +13,11 @@ namespace StarBucks.Analytics.UI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summary>5
     public partial class MainWindow : Window
     {
-        statics stat;
+        private statics stat = new statics();
+        private DatasetMgr dataMgr = new DatasetMgr();
 
         private Boolean menuBackgroundWorkerFinished = false;
         private Boolean todayBackgroundWorkerFinished = false;
@@ -24,169 +26,31 @@ namespace StarBucks.Analytics.UI
         public MainWindow()
         {
             InitializeComponent();
-            stat = new statics();
 
             stat.addPayment("TEST", "Category #2", payments.paymentMethod.CARD, 10000, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
             initBaseChart();
         }
 
-        private async Task<DataSet> getMenuStatics()
+        private void refreshData()
         {
-            DataSet ds = stat.getPayments();
+            BackgroundWorker menuBackgroundWorker = new BackgroundWorker();
+            BackgroundWorker todayBackgroundWorker = new BackgroundWorker();
+            BackgroundWorker categoryBackgroundWorker = new BackgroundWorker();
 
-            ds.Tables[0].Columns.Add("paymentMethodText", Type.GetType("System.String"));
+            menuBackgroundWorker.DoWork += MenuBackgroundWorker_DoWork;
+            todayBackgroundWorker.DoWork += TodayBackgroundWorker_DoWork;
+            categoryBackgroundWorker.DoWork += CategoryBackgroundWorker_DoWork;
 
-            foreach (DataRow row in ds.Tables[0].Rows)
-            {
-                for (var i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
-                    if (ds.Tables[0].Rows.IndexOf(row) != i && ds.Tables[0].Rows[i].RowState != DataRowState.Deleted)
-                    {
-                        try
-                        {
-                            if (row["paymentMethod"].ToString() == "CASH")
-                            {
-                                row["paymentMethodText"] = "현금";
-                            }
-                            else
-                            {
-                                row["paymentMethodText"] = "카드";
-                            }
+            menuBackgroundWorker.RunWorkerCompleted += MenuBackgroundWorker_RunWorkerCompleted;
+            todayBackgroundWorker.RunWorkerCompleted += TodayBackgroundWorker_RunWorkerCompleted;
+            categoryBackgroundWorker.RunWorkerCompleted += CategoryBackgroundWorker_RunWorkerCompleted;
 
-                            if (ds.Tables[0].Rows[i]["paymentMethod"].ToString() == "CASH")
-                            {
-                                ds.Tables[0].Rows[i]["paymentMethodText"] = "현금";
-                            }
-                            else
-                            {
-                                ds.Tables[0].Rows[i]["paymentMethodText"] = "카드";
-                            }
-
-                            if (ds.Tables[0].Rows[i]["paymentfor"].ToString() == row["paymentfor"].ToString() && ds.Tables[0].Rows[i]["paymentMethod"].ToString() == row["paymentMethod"].ToString())
-                            {
-                                ds.Tables[0].Rows[i]["paymentAmount"] = Convert.ToInt64(ds.Tables[0].Rows[i]["paymentAmount"]) + Convert.ToInt64(row["paymentAmount"]);
-                                row.Delete();
-
-                                break;
-                            }
-                        }
-                        catch
-                        {
-
-                        }
-                    }
-                }
-            }
-
-            ds.AcceptChanges();
-
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                this.menu.ItemsSource = ds.Tables[0].DefaultView;
-            }));
-
-            return ds;
+            menuBackgroundWorker.RunWorkerAsync();
+            todayBackgroundWorker.RunWorkerAsync();
+            categoryBackgroundWorker.RunWorkerAsync();
         }
 
-        private async Task<DataSet> getTodayStatics()
-        {
-            var todayAmount = 0;
-            DataSet ds = stat.getPayments();
-
-            ds.Tables[0].Columns.Add("paymentMethodText", Type.GetType("System.String"));
-
-            foreach (DataRow row in ds.Tables[0].Rows)
-            {
-                if (row.RowState != DataRowState.Deleted)
-                {
-                    if (row["paymentMethod"].ToString() == "CASH")
-                    {
-                        row["paymentMethodText"] = "현금";
-                    }
-                    else
-                    {
-                        row["paymentMethodText"] = "카드";
-                    }
-
-                    if (DateTime.Today.Date.CompareTo(DateTime.Parse(row["paymentDate"].ToString()).Date) != 0)
-                    {
-                        row.Delete();
-                    }
-                    else
-                    {
-                        todayAmount += Convert.ToInt32(row["paymentAmount"]);
-                    }
-                }
-            }
-
-            ds.AcceptChanges();
-
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                this.todayAmountLabel.Content = "오늘 판매량: " + todayAmount + " 원";
-                this.today.ItemsSource = ds.Tables[0].DefaultView;
-            }));
-
-            return ds;
-        }
-
-        private async Task<DataSet> getCategoryStatics()
-        {
-            DataSet ds = stat.getPayments();
-
-            ds.Tables[0].Columns.Add("paymentMethodText", Type.GetType("System.String"));
-
-            foreach (DataRow row in ds.Tables[0].Rows)
-            {
-                for (var i = 0; i < ds.Tables[0].Rows.Count; i++)
-                {
-                    if (ds.Tables[0].Rows.IndexOf(row) != i && ds.Tables[0].Rows[i].RowState != DataRowState.Deleted)
-                    {
-                        try
-                        {
-                            if (row["paymentMethod"].ToString() == "CASH")
-                            {
-                                row["paymentMethodText"] = "현금";
-                            }
-                            else
-                            {
-                                row["paymentMethodText"] = "카드";
-                            }
-
-                            if (ds.Tables[0].Rows[i]["paymentMethod"].ToString() == "CASH")
-                            {
-                                ds.Tables[0].Rows[i]["paymentMethodText"] = "현금";
-                            }
-                            else
-                            {
-                                ds.Tables[0].Rows[i]["paymentMethodText"] = "카드";
-                            }
-
-                            if (ds.Tables[0].Rows[i]["category"].ToString() == row["category"].ToString() && ds.Tables[0].Rows[i]["paymentMethod"].ToString() == row["paymentMethod"].ToString())
-                            {
-                                ds.Tables[0].Rows[i]["paymentAmount"] = Convert.ToInt64(ds.Tables[0].Rows[i]["paymentAmount"]) + Convert.ToInt64(row["paymentAmount"]);
-                                row.Delete();
-                                break;
-                            }
-                        }
-                        catch
-                        {
-
-                        }
-                    }
-                }
-            }
-
-            ds.AcceptChanges();
-
-            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-            {
-                this.category.ItemsSource = ds.Tables[0].DefaultView;
-            }));
-
-            return ds;
-        }
-
+        #region Chart
         private void initBaseChart()
         {
             var todayCollection = new SeriesCollection
@@ -231,7 +95,7 @@ namespace StarBucks.Analytics.UI
             this.category_chart.Series = categoryCollection;
         }
 
-        private async void initTodayChart(DataSet ds)
+        private void initTodayChart(DataSet ds)
         {
             var timeIdxCount = new int[24];
             var cardIdxCount = new int[24];
@@ -239,24 +103,18 @@ namespace StarBucks.Analytics.UI
 
             foreach (DataRow row in ds.Tables[0].Rows)
             {
-                try
+                var timeIdx = DateTime.Parse(row["paymentDate"].ToString()).Hour;
+                if (row["paymentMethod"].ToString() == "CASH")
                 {
-                    var timeIdx = DateTime.Parse(row["paymentDate"].ToString()).Hour;
-                    if (row["paymentMethod"].ToString() == "CASH")
-                    {
-                        cashIdxCount[timeIdx] = cashIdxCount[timeIdx] + 1;
-                    }
-                    else
-                    {
-                        cardIdxCount[timeIdx] = cardIdxCount[timeIdx] + 1;
-                    }
-
-                    timeIdxCount[timeIdx] = timeIdxCount[timeIdx] + 1;
+                    cashIdxCount[timeIdx] = cashIdxCount[timeIdx] + 1;
                 }
-                catch
+                else
                 {
-
+                    cardIdxCount[timeIdx] = cardIdxCount[timeIdx] + 1;
                 }
+
+                timeIdxCount[timeIdx] = timeIdxCount[timeIdx] + 1;
+
             }
 
             var Labels = new[] { "00 시", "01 시", "02 시", "03 시", "04 시", "05 시", "06 시", "07 시", "08 시", "09 시", "10 시", "11 시", "12 시",
@@ -271,7 +129,7 @@ namespace StarBucks.Analytics.UI
             }));
         }
 
-        private async void initMenuChart(DataSet ds)
+        private void initMenuChart(DataSet ds)
         {
             var tempValue = new ChartValues<double> { };
 
@@ -279,15 +137,8 @@ namespace StarBucks.Analytics.UI
 
             for (var i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                try
-                {
-                    LabelsList.Add(ds.Tables[0].Rows[i]["paymentfor"].ToString() + "(" + ds.Tables[0].Rows[i]["paymentMethodText"].ToString() + ")");
-                    tempValue.Add(Convert.ToDouble(ds.Tables[0].Rows[i]["paymentAmount"].ToString()));
-                }
-                catch
-                {
-
-                }
+                LabelsList.Add(ds.Tables[0].Rows[i]["paymentfor"].ToString() + "(" + ds.Tables[0].Rows[i]["paymentMethodText"].ToString() + ")");
+                tempValue.Add(Convert.ToDouble(ds.Tables[0].Rows[i]["paymentAmount"].ToString()));
             }
 
             this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
@@ -297,22 +148,15 @@ namespace StarBucks.Analytics.UI
             }));
         }
 
-        private async void initCategoryChart(DataSet ds)
+        private void initCategoryChart(DataSet ds)
         {
             var tempValues = new ChartValues<double> { };
             var LabelsList = new List<String>();
 
             for (var i = 0; i < ds.Tables[0].Rows.Count; i++)
             {
-                try
-                {
-                    LabelsList.Add(ds.Tables[0].Rows[i]["category"].ToString() + "(" + ds.Tables[0].Rows[i]["paymentMethodText"].ToString() + ")");
-                    tempValues.Add(Convert.ToDouble(ds.Tables[0].Rows[i]["paymentAmount"].ToString()));
-                }
-                catch
-                {
-
-                }
+                LabelsList.Add(ds.Tables[0].Rows[i]["category"].ToString() + "(" + ds.Tables[0].Rows[i]["paymentMethodText"].ToString() + ")");
+                tempValues.Add(Convert.ToDouble(ds.Tables[0].Rows[i]["paymentAmount"].ToString()));
             }
 
             this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
@@ -321,48 +165,46 @@ namespace StarBucks.Analytics.UI
                 this.category_chart.AxisY[0].Labels = LabelsList.ToArray();
             }));
         }
+        #endregion
 
+        #region Events
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             this.Loading.Visibility = Visibility.Visible;
             refreshData();
         }
 
-        private async void refreshData()
+        private void CategoryBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            BackgroundWorker menuBackgroundWorker = new BackgroundWorker();
-            BackgroundWorker todayBackgroundWorker = new BackgroundWorker();
-            BackgroundWorker categoryBackgroundWorker = new BackgroundWorker();
-
-            menuBackgroundWorker.DoWork += MenuBackgroundWorker_DoWork;
-            todayBackgroundWorker.DoWork += TodayBackgroundWorker_DoWork;
-            categoryBackgroundWorker.DoWork += CategoryBackgroundWorker_DoWork;
-
-            menuBackgroundWorker.RunWorkerCompleted += MenuBackgroundWorker_RunWorkerCompleted;
-            todayBackgroundWorker.RunWorkerCompleted += TodayBackgroundWorker_RunWorkerCompleted;
-            categoryBackgroundWorker.RunWorkerCompleted += CategoryBackgroundWorker_RunWorkerCompleted;
-
-            menuBackgroundWorker.RunWorkerAsync();
-            todayBackgroundWorker.RunWorkerAsync();
-            categoryBackgroundWorker.RunWorkerAsync();
-        }
-
-        private async void CategoryBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            var categoryDataset = await getCategoryStatics();
+            var categoryDataset = dataMgr.getCategoryStatics();
             initCategoryChart(categoryDataset);
+
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                this.category.DataContext = categoryDataset.Tables[0].DefaultView;
+            }));
         }
 
-        private async void TodayBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void TodayBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var todayDataset = await getTodayStatics();
+            var todayDataset = dataMgr.getTodayStatics();
             initTodayChart(todayDataset);
+
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                this.today.DataContext = todayDataset.Tables[0].DefaultView;
+            }));
         }
 
-        private async void MenuBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        private void MenuBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var menuDataset = await getMenuStatics();
+            var menuDataset = dataMgr.getMenuStatics();
             initMenuChart(menuDataset);
+
+            this.Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
+            {
+                this.menu.DataContext = menuDataset.Tables[0].DefaultView;
+            }));
         }
 
         private void CategoryBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -387,7 +229,7 @@ namespace StarBucks.Analytics.UI
 
         private void MenuBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if(categoryBackgroundWorkerFinished == true && todayBackgroundWorkerFinished == true)
+            if (categoryBackgroundWorkerFinished == true && todayBackgroundWorkerFinished == true)
             {
                 onLoadFinished();
             }
@@ -405,6 +247,48 @@ namespace StarBucks.Analytics.UI
             {
                 this.Loading.Visibility = Visibility.Hidden;
             }));
+
+            showReloadAlert();
         }
+
+        private void showReloadAlert()
+        {
+            DoubleAnimation noticeAnimation = new DoubleAnimation();
+            noticeAnimation.From = 0;
+            noticeAnimation.To = 1;
+
+            noticeAnimation.FillBehavior = FillBehavior.Stop;
+            noticeAnimation.Completed += NoticeAnimation_Completed;
+
+            this.successNotice.Opacity = 0;
+            this.successNotice.Visibility = Visibility.Visible;
+            
+            this.successNotice.BeginAnimation(OpacityProperty, noticeAnimation);
+
+        }
+
+        private void NoticeAnimation_Completed(object sender, EventArgs e)
+        {
+            DoubleAnimation noticeAnimation = new DoubleAnimation();
+            noticeAnimation.From = 1;
+            noticeAnimation.To = 0;
+            noticeAnimation.AccelerationRatio = 0.5;
+
+            noticeAnimation.FillBehavior = FillBehavior.Stop;
+            noticeAnimation.Completed += NoticeAnimatePadeOut_Complited;
+
+            this.successNotice.BeginAnimation(OpacityProperty, noticeAnimation);
+        }
+
+        private void NoticeAnimatePadeOut_Complited(object sender, EventArgs e)
+        {
+            this.successNotice.Visibility = Visibility.Hidden;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            refreshData();
+        }
+        #endregion
     }
 }
