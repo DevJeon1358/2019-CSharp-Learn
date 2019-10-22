@@ -11,7 +11,17 @@ namespace StarBucks
     {
         private readonly int TABLE_MAX = 6;
         bool isLoaded = false;
-        public List<Seat> lstSeat = null;
+        private List<Seat> _lstSeat;
+        public List<Seat> lstSeat {
+            get
+            {
+                return _lstSeat;
+            }
+            set
+            {
+                _lstSeat = value;
+            }
+        }
 
         public void Load()
         {
