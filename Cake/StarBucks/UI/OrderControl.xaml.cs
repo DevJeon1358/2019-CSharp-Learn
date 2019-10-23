@@ -226,9 +226,8 @@ namespace StarBucks
 
         private void BackHome()     // 결제 시
         {
-            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = new List<Drink>() });
             this.tableIdx = 0;
-
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
@@ -240,6 +239,7 @@ namespace StarBucks
 
         private void BackHome(object sender, RoutedEventArgs e)
         {
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
             InitOrderControl();
             this.tableIdx = 0;
             this.Visibility = Visibility.Collapsed;
