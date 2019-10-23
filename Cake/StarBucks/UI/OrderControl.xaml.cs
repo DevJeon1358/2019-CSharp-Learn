@@ -62,11 +62,6 @@ namespace StarBucks
             AddListItems();
         }
 
-        private void GetTableId()
-        {
-            tableId.Text = tableIdx.ToString();
-        }
-
         private void InitMenu()
         {
             Drinks.Clear();
@@ -250,6 +245,7 @@ namespace StarBucks
 
         private void BackHome(object sender, RoutedEventArgs e)
         {
+            
             onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
             InitOrderControl();
             this.tableIdx = 0;
