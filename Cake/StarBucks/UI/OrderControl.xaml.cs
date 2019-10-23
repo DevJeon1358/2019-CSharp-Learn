@@ -164,7 +164,7 @@ namespace StarBucks
         }
 
         private int SetTotalPrice()
-        {
+        {//총액
             int sum = 0;
 
             foreach (var item in lvDrink.Items)
@@ -203,9 +203,20 @@ namespace StarBucks
             addPayment(OrderedDrink, payments.paymentMethod.CARD);
         }
 
+        private string OrderedDrinkListString(List<Drink> OrderedDrink)
+        {//주문내역을 string값으로 한번에 반환
+            string menuList = "";
+            foreach (Drink drink in OrderedDrink)
+            {
+                menuList += (drink.Name + " X " + drink.Count + "\n");
+            }
+            return menuList;
+        }
+
         private void addPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
         {
-            if (MessageBox.Show("결제하시겠습니까?", "안내", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            string menuList = OrderedDrinkListString(OrderedDrink);
+            if (MessageBox.Show(menuList + "결제하시겠습니까?", SetTotalPrice().ToString() + " 원 ", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 // DB에 값 전달(이름,카테고리,결제타입,결제금액,결제시간)
                 foreach (Drink drink in OrderedDrink) 
