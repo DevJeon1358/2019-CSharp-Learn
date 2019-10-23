@@ -31,7 +31,17 @@ namespace StarBucks
         private List<Drink> Drinks = new List<Drink>();
         private statics statics;
 
-        public int tableIdx { get; set; }
+        public int tableIdx
+        {
+            get
+            {
+                return (Convert.ToInt32(tableId.Text));
+            }
+            set
+            {
+                tableId.Text = value.ToString();
+            }
+        }
 
         public delegate void OrderHandler(object sender, OrderEventArgs args);
         public event OrderHandler onOrder;
@@ -40,6 +50,7 @@ namespace StarBucks
         {
             InitializeComponent();
             this.Loaded += OrderControl_Loaded;
+            onOrder?.Invoke(this,new OrderEventArgs());
             statics = new statics();
         }
 
@@ -47,11 +58,16 @@ namespace StarBucks
         {
             App.DrinkData.Load();
             OrderedDrink = new List<Drink>();
-            initMenu();
+            InitMenu();
             AddListItems();
         }
 
-        private void initMenu()
+        private void GetTableId()
+        {
+            tableId.Text = tableIdx.ToString();
+        }
+
+        private void InitMenu()
         {
             Drinks.Clear();
             foreach (var drink in App.DrinkData.listDrink)
@@ -139,17 +155,24 @@ namespace StarBucks
                 seat.lstDrink.Add(drink);
             }
 
-            int TotalPrice = 0;
-
-            foreach(var item in lvDrink.Items)
-            {
-                TotalPrice += (item as DrinkControl).GetTotalPrice();
-            }
+            int TotalPrice = SetTotalPrice();
 
             totalPrice.Text = TotalPrice + "원";
 
             selectedDrink.ItemsSource = OrderedDrink;
             selectedDrink.Items.Refresh();
+        }
+
+        private int SetTotalPrice()
+        {
+            int sum = 0;
+
+            foreach (var item in lvDrink.Items)
+            {
+                sum += (item as DrinkControl).GetTotalPrice();
+            }
+
+            return sum;
         }
 
         private void PlusMinusDrink(object sender, RoutedEventArgs e)   // plus minus 버튼 클릭 시 이벤트
@@ -226,7 +249,7 @@ namespace StarBucks
         {
             OrderedDrink.Clear();
             selectedDrink.Items.Refresh();
-            initMenu();
+            InitMenu();
             OrderedDrink = new List<Drink>();
             totalPrice.Text = "";
             AddListItems();

@@ -101,8 +101,8 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <TextBlock Text="" x:Name="tableId"/>
-                                <TextBlock Text="테이블의 주문 내역" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                <TextBlock Text="" x:Name="tableId" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 220 3"/>
+                                <TextBlock Text="번 테이블의 주문 내역" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
                                 <Button x:Name="allClear" Click="AllClear_Click" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 8 0" >전체삭제</Button> 
                                 <Border BorderBrush="#212121" Opacity="0.45" BorderThickness="0 0 0 1"/>
@@ -178,13 +178,9 @@
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
                             <Border BorderBrush="#212121" BorderThickness="0 0 2 0"/>
-                            <!--<ListView x:Name="selectImage">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>-->
+                            <ListView x:Name="selectImage">
+                                
+                            </ListView>
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
