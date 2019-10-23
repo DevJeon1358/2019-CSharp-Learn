@@ -154,8 +154,15 @@ namespace StarBucks
 
             totalPrice.Text = TotalPrice + "원";
 
+            SelectMenuImage(drink);
+
             selectedDrink.ItemsSource = OrderedDrink;
             selectedDrink.Items.Refresh();
+        }
+
+        private void SelectMenuImage(Drink drink)
+        {
+            ImageViewer.Source = new BitmapImage(new Uri(drink.ImagePath, UriKind.Relative));
         }
 
         private int SetTotalPrice()
@@ -173,8 +180,6 @@ namespace StarBucks
         private void PlusMinusDrink(object sender, RoutedEventArgs e)   // plus minus 버튼 클릭 시 이벤트
         {
             var type = ((Button)sender).Name;
-
-
 
             //if (type == "plus")
             //{
@@ -271,5 +276,7 @@ namespace StarBucks
         {
 
         }
+
+        
     }
 }
