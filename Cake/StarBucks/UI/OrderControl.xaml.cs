@@ -39,7 +39,8 @@ namespace StarBucks
     /// </summary>
     public partial class OrderControl : UserControl
     { 
-        public List<Drink> OrderedDrink { get; set; }
+        //public List<Drink> OrderedDrink { get; set; }
+        private Seat orderedSeat = new Seat();
         private List<Drink> Drinks = new List<Drink>();
         private statics statics;
         private int Seatid = 0;
@@ -77,10 +78,9 @@ namespace StarBucks
             Seatid = id;
             tableId.Text = Seatid.ToString();
 
-            Seat seat = App.SeatData.lstSeat.Where(x => x.Id == Seatid).FirstOrDefault();
-            OrderedDrink = seat.lstDrink;
+            orderedSeat = App.SeatData.lstSeat.Where(x => x.Id == Seatid).FirstOrDefault();            
 
-            selectedDrink.ItemsSource = OrderedDrink;
+            selectedDrink.ItemsSource = orderedSeat.lstDrink;
             selectedDrink.Items.Refresh();
         }
 
@@ -126,12 +126,12 @@ namespace StarBucks
 
         private void OnMouseDowndrink(Drink drink, Seat seat)   // menu 클릭 시 OrderedDrink 리스트로 추가
         {
-            var temp = OrderedDrink.Where(x => x.Name == drink.Name).FirstOrDefault();
+            var temp = orderedSeat.lstDrink.Where(x => x.Name == drink.Name).FirstOrDefault();
             drink.Count++;
 
             if (temp == null)
             {
-                OrderedDrink.Add(drink);
+                orderedSeat.lstDrink.Add(drink);
                 seat.lstDrink.Add(drink); //??
             }
 
@@ -143,7 +143,7 @@ namespace StarBucks
 
             SelectMenuImage(drink);
 
-            selectedDrink.ItemsSource = OrderedDrink;
+            selectedDrink.ItemsSource = orderedSeat.lstDrink;
             selectedDrink.Items.Refresh();
         }
 
@@ -156,7 +156,7 @@ namespace StarBucks
         {//총액
             int sum = 0;
 
-            foreach (Drink drink in OrderedDrink)
+            foreach (Drink drink in orderedSeat.lstDrink)
             {
                 sum += (drink.Price * drink.Count);
             }
@@ -186,13 +186,13 @@ namespace StarBucks
         private void cashPay(object sender, RoutedEventArgs e)
         {
             //DB에 주문내역 전달,결제타입은 현금
-            addPayment(OrderedDrink, payments.paymentMethod.CASH);
+            addPayment(orderedSeat.lstDrink, payments.paymentMethod.CASH);
         }
 
         private void cardPay(object sender, RoutedEventArgs e)
         {
             //DB에 주문내역 전달,결제타입은 카드
-            addPayment(OrderedDrink, payments.paymentMethod.CARD);
+            addPayment(orderedSeat.lstDrink, payments.paymentMethod.CARD);
         }
 
         private string OrderedDrinkListString(List<Drink> OrderedDrink)
@@ -234,16 +234,15 @@ namespace StarBucks
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
-        public void setOrderList(List<Drink> drinks)
-        {
-            this.OrderedDrink = drinks;
-            selectedDrink.Items.Refresh();
-        }
+        //public void setOrderList(List<Drink> drinks)
+        //{
+        //    this.OrderedDrink = drinks;
+        //    selectedDrink.Items.Refresh();
+        //}
 
         private void BackHome(object sender, RoutedEventArgs e) // 주문하고 뒤로가기 시 사용
         {
-            
-            onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = OrderedDrink });
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = orderedSeat.lstDrink });
             //InitOrderControl();
             this.Seatid = 0;
             this.Visibility = Visibility.Collapsed;
@@ -251,7 +250,7 @@ namespace StarBucks
 
         private void InitOrderControl()     // 결제 시 or 주문 리스트 전체 삭제 시 사용
         {
-            OrderedDrink.Clear();
+            orderedSeat.lstDrink.Clear();
             selectedDrink.Items.Refresh();
             InitMenu();
             totalPrice.Text = "";
