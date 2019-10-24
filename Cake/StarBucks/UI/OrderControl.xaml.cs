@@ -58,7 +58,7 @@ namespace StarBucks
         private void OrderControl_Loaded(object sender, RoutedEventArgs e)
         {
             App.DrinkData.Load();
-            OrderedDrink = new List<Drink>();
+            // OrderedDrink = new List<Drink>();
             InitMenu();
             AddListItems();
         }
@@ -76,6 +76,12 @@ namespace StarBucks
         {
             Seatid = id;
             tableId.Text = Seatid.ToString();
+
+            Seat seat = App.SeatData.lstSeat.Where(x => x.Id == Seatid).FirstOrDefault();
+            OrderedDrink = seat.lstDrink;
+
+            selectedDrink.ItemsSource = OrderedDrink;
+            selectedDrink.Items.Refresh();
         }
 
         private void AddListItems()
