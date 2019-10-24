@@ -31,7 +31,17 @@ namespace StarBucks
         private List<Drink> Drinks = new List<Drink>();
         private statics statics;
 
-        public int tableIdx { get; set; }
+        public int tableIdx
+        {
+            get
+            {
+                return (Convert.ToInt32(tableId.Text));
+            }
+            set
+            {
+                tableId.Text = value.ToString();
+            }
+        }
 
         public delegate void OrderHandler(object sender, OrderEventArgs args);
         public event OrderHandler onOrder;
@@ -40,6 +50,7 @@ namespace StarBucks
         {
             InitializeComponent();
             this.Loaded += OrderControl_Loaded;
+            onOrder?.Invoke(this,new OrderEventArgs());
             statics = new statics();
         }
 
@@ -47,11 +58,11 @@ namespace StarBucks
         {
             App.DrinkData.Load();
             OrderedDrink = new List<Drink>();
-            initMenu();
+            InitMenu();
             AddListItems();
         }
 
-        private void initMenu()
+        private void InitMenu()
         {
             Drinks.Clear();
             foreach (var drink in App.DrinkData.listDrink)
@@ -139,29 +150,36 @@ namespace StarBucks
                 seat.lstDrink.Add(drink);
             }
 
-            int TotalPrice = 0;
-
-            foreach(var item in lvDrink.Items)
-            {
-                TotalPrice += (item as DrinkControl).GetTotalPrice();
-            }
+            int TotalPrice = SetTotalPrice();
 
             totalPrice.Text = TotalPrice + "원";
+
+            SelectMenuImage(drink);
 
             selectedDrink.ItemsSource = OrderedDrink;
             selectedDrink.Items.Refresh();
         }
 
-        private void OnPlusMinusClick(Drink drink, Seat seat)
+        private void SelectMenuImage(Drink drink)
         {
+            ImageViewer.Source = new BitmapImage(new Uri(drink.ImagePath, UriKind.Relative));
+        }
 
+        private int SetTotalPrice()
+        {//총액
+            int sum = 0;
+
+            foreach (var item in lvDrink.Items)
+            {
+                sum += (item as DrinkControl).GetTotalPrice();
+            }
+
+            return sum;
         }
 
         private void PlusMinusDrink(object sender, RoutedEventArgs e)   // plus minus 버튼 클릭 시 이벤트
         {
             var type = ((Button)sender).Name;
-
-
 
             //if (type == "plus")
             //{
@@ -185,9 +203,20 @@ namespace StarBucks
             addPayment(OrderedDrink, payments.paymentMethod.CARD);
         }
 
+        private string OrderedDrinkListString(List<Drink> OrderedDrink)
+        {//주문내역을 string값으로 한번에 반환
+            string menuList = "";
+            foreach (Drink drink in OrderedDrink)
+            {
+                menuList += (drink.Name + " X " + drink.Count + "\n");
+            }
+            return menuList;
+        }
+
         private void addPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
         {
-            if (MessageBox.Show("결제하시겠습니까?", "안내", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            string menuList = OrderedDrinkListString(OrderedDrink);
+            if (MessageBox.Show(menuList + "결제하시겠습니까?", SetTotalPrice().ToString() + " 원 ", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 // DB에 값 전달(이름,카테고리,결제타입,결제금액,결제시간)
                 foreach (Drink drink in OrderedDrink) 
@@ -221,6 +250,7 @@ namespace StarBucks
 
         private void BackHome(object sender, RoutedEventArgs e)
         {
+            
             onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
             InitOrderControl();
             this.tableIdx = 0;
@@ -231,7 +261,7 @@ namespace StarBucks
         {
             OrderedDrink.Clear();
             selectedDrink.Items.Refresh();
-            initMenu();
+            InitMenu();
             OrderedDrink = new List<Drink>();
             totalPrice.Text = "";
             AddListItems();
@@ -246,5 +276,7 @@ namespace StarBucks
         {
 
         }
+
+        
     }
 }

@@ -22,15 +22,15 @@ namespace StarBucks.UI
     /// Interaction logic for Main.xaml
     /// </summary>
 
-    public class MainEventArgs : EventArgs //핸들러로 주문화면에 seat id넘겨주기
-    {
-        public int id;
-    }
+    //public class MainEventArgs : EventArgs //핸들러로 주문화면에 seat id넘겨주기
+    //{
+    //    public int id;
+    //}
 
     public partial class Main : Window
     {
-        public delegate void CompleteHandler(object sender, MainEventArgs args);
-        public event CompleteHandler OnComplete; //이벤트 이름 Oncomplete
+        //public delegate void CompleteHandler(object sender, MainEventArgs args);
+        //public event CompleteHandler OnComplete; //이벤트 이름 Oncomplete
 
         public Main()
         {
@@ -92,14 +92,15 @@ namespace StarBucks.UI
             SeatControl seatControl = lstSeat.SelectedItem as SeatControl; //선택된 SeatCtrl에서 
             int id = seatControl.GetSeatId(); // seat id를 가져오기
 
-            MainEventArgs args = new MainEventArgs(); //핸들러 선언
-            args.id = id; //핸들러의 id에 seat id 넣기
+            //MainEventArgs args = new MainEventArgs(); //핸들러 선언
+            //args.id = id; //핸들러의 id에 seat id 넣기
 
-            //같다. OnComplete?.Invoke(this, null);
-            if (OnComplete != null) //누군가 핸들러를 등록했다면 
-            {
-                OnComplete(this, args); //이벤트 발생,(this, 파라미터[seat id])
-            }
+            ////같다. OnComplete?.Invoke(this, null);
+            //if (OnComplete != null) //누군가 핸들러를 등록했다면 
+            //{
+            //    OnComplete(this, args); //이벤트 발생,(this, 파라미터[seat id])
+            //}
+
             orderControl.Visibility = Visibility.Visible;
 
             // Table 번호
