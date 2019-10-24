@@ -242,7 +242,7 @@ namespace StarBucks
             this.Visibility = Visibility.Collapsed;
         }
 
-        private void InitOrderControl()
+        private void InitOrderControl()     // 결제 시 or 주문 리스트 전체 삭제 시 사용
         {
             OrderedDrink.Clear();
             selectedDrink.Items.Refresh();
@@ -250,6 +250,11 @@ namespace StarBucks
             OrderedDrink = new List<Drink>();
             totalPrice.Text = "";
             AddListItems();
+        }
+
+        private void outOrderControl()      // 주문하고 뒤로가기 시 사용
+        {
+
         }
 
         private void AllClear_Click(object sender, RoutedEventArgs e)
