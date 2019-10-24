@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <Style x:Key="OrderedNameStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
@@ -60,9 +60,12 @@
                         </Border>
 
                         <ListBoxItem Selected="Select_All" Content="전체 메뉴" Width="100" HorizontalContentAlignment="Center"/>
-                        <ListBoxItem Selected="Select_ColdBrew" Foreground="DarkBlue" Content="콜드 브루 커피" Width="180" HorizontalContentAlignment="Center"/>
-                        <ListBoxItem Selected="Select_Espresso" Foreground="SaddleBrown" Content="에스프레소" Width="150" HorizontalContentAlignment="Center"/>
-                        <ListBoxItem Selected="Select_Frappuccino" Foreground="SandyBrown" Content="프라푸치노" Width="150" HorizontalContentAlignment="Center"/>
+                        <ListBoxItem x:Name="콜드브루" Selected="Select_Menu" Foreground="DarkBlue" Content="콜드 브루 커피" Width="180" HorizontalContentAlignment="Center"/>
+                        <ListBoxItem x:Name="에스프레소" Selected="Select_Menu" Foreground="SaddleBrown" Content="에스프레소" Width="150" HorizontalContentAlignment="Center"/>
+                        <ListBoxItem x:Name="프라푸치노"  Selected="Select_Menu" Foreground="SandyBrown" Content="프라푸치노" Width="150" HorizontalContentAlignment="Center"/>
+                        <ListBoxItem x:Name="브루커피"  Selected="Select_Menu" Foreground="RosyBrown" Content="브루커피" Width="150" HorizontalContentAlignment="Center"/>
+                        <ListBoxItem x:Name="블렌디드"  Selected="Select_Menu" Foreground="PaleVioletRed" Content="블렌디드" Width="150" HorizontalContentAlignment="Center"/>
+                        <ListBoxItem x:Name="피지오"  Selected="Select_Menu" Foreground="DarkSeaGreen" Content="스타벅스 피지오" Width="150" HorizontalContentAlignment="Center"/>
                     </ListBox>
                 </StackPanel>
                 <Button Click="BackHome" Content="뒤로가기" Width="130" Height="60" FontSize="28" FontWeight="Bold"  HorizontalAlignment="Right" Margin="0 0 20 0" />

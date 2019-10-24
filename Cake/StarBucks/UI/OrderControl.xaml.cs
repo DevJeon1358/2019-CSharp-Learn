@@ -96,38 +96,10 @@ namespace StarBucks
                 lvDrink.Items.Add(drinkControl);
             }
         }
-        private void Select_ColdBrew(object sender, RoutedEventArgs e)  // 콜드브루 선택 시
+        private void Select_Menu(object sender, RoutedEventArgs e)  // 각 메뉴 선택 시
         {
             lvDrink.Items.Clear();
-            string category = "콜드브루";
-            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
-
-            foreach (Drink drink in categoryDrinkList)
-            {
-                DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
-                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
-                lvDrink.Items.Add(drinkControl);
-            }
-        }
-        private void Select_Espresso(object sender, RoutedEventArgs e)  // 에스프레소 선택 시
-        {
-            lvDrink.Items.Clear();
-            string category = "에스프레소";
-            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
-
-            foreach (Drink drink in categoryDrinkList)
-            {
-                DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
-                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
-                lvDrink.Items.Add(drinkControl);
-            }
-        }
-        private void Select_Frappuccino(object sender, RoutedEventArgs e)   // 프라푸치노 선택 시
-        {
-            lvDrink.Items.Clear();
-            string category = "프라푸치노";
+            string category = ((ListBoxItem)sender).Name;
             List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
 
             foreach (Drink drink in categoryDrinkList)
@@ -252,7 +224,7 @@ namespace StarBucks
         {
             
             onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
-            InitOrderControl();
+            //InitOrderControl();
             this.tableIdx = 0;
             this.Visibility = Visibility.Collapsed;
         }
