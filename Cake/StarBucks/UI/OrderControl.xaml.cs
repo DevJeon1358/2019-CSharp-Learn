@@ -132,12 +132,14 @@ namespace StarBucks
             if (temp == null)
             {
                 OrderedDrink.Add(drink);
-                seat.lstDrink.Add(drink);
+                seat.lstDrink.Add(drink); //??
             }
 
-            int TotalPrice = SetTotalPrice();
+            //int TotalPrice = SetTotalPrice();
 
-            totalPrice.Text = TotalPrice + "원";
+            //totalPrice.Text = TotalPrice + "원";
+
+            totalPrice.Text = SetTotalPrice() + "원";
 
             SelectMenuImage(drink);
 
@@ -154,10 +156,15 @@ namespace StarBucks
         {//총액
             int sum = 0;
 
-            foreach (var item in lvDrink.Items)
+            foreach (Drink drink in OrderedDrink)
             {
-                sum += (item as DrinkControl).GetTotalPrice();
+                sum += (drink.Price * drink.Count);
             }
+
+            // foreach (var item in lvDrink.Items)
+            //{
+            //      sum += (drink.Price * drink.Count);
+            //}
 
             return sum;
         }
@@ -233,7 +240,7 @@ namespace StarBucks
             selectedDrink.Items.Refresh();
         }
 
-        private void BackHome(object sender, RoutedEventArgs e)
+        private void BackHome(object sender, RoutedEventArgs e) // 주문하고 뒤로가기 시 사용
         {
             
             onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = OrderedDrink });
@@ -247,14 +254,8 @@ namespace StarBucks
             OrderedDrink.Clear();
             selectedDrink.Items.Refresh();
             InitMenu();
-            OrderedDrink = new List<Drink>();
             totalPrice.Text = "";
             AddListItems();
-        }
-
-        private void outOrderControl()      // 주문하고 뒤로가기 시 사용
-        {
-
         }
 
         private void AllClear_Click(object sender, RoutedEventArgs e)
