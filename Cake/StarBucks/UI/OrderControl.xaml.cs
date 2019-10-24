@@ -22,6 +22,18 @@ namespace StarBucks
         public List<Drink> orderedDrinks;
     }
 
+    //public int tableIdx
+    //{
+    //    get
+    //    {
+    //        return (Convert.ToInt32(tableId.Text));
+    //    }
+    //    set
+    //    {
+    //        tableId.Text = value.ToString();
+    //    }
+    //}
+
     /// <summary>
     /// Interaction logic for OrderControl.xaml
     /// </summary>
@@ -30,18 +42,7 @@ namespace StarBucks
         public List<Drink> OrderedDrink { get; set; }
         private List<Drink> Drinks = new List<Drink>();
         private statics statics;
-
-        public int tableIdx
-        {
-            get
-            {
-                return (Convert.ToInt32(tableId.Text));
-            }
-            set
-            {
-                tableId.Text = value.ToString();
-            }
-        }
+        private int Seatid = 0;
 
         public delegate void OrderHandler(object sender, OrderEventArgs args);
         public event OrderHandler onOrder;
@@ -69,6 +70,12 @@ namespace StarBucks
             {
                 Drinks.Add(drink.Clone());
             }
+        }
+
+        public void SetSeatIdOnOrder(int id)
+        {
+            Seatid = id;
+            tableId.Text = Seatid.ToString();
         }
 
         private void AddListItems()
@@ -209,8 +216,8 @@ namespace StarBucks
 
         private void BackHome()     // 결제 시
         {
-            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = new List<Drink>() });
-            this.tableIdx = 0;
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = new List<Drink>() });
+            this.Seatid = 0;
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
@@ -223,9 +230,9 @@ namespace StarBucks
         private void BackHome(object sender, RoutedEventArgs e)
         {
             
-            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = OrderedDrink });
             //InitOrderControl();
-            this.tableIdx = 0;
+            this.Seatid = 0;
             this.Visibility = Visibility.Collapsed;
         }
 

@@ -84,9 +84,9 @@ namespace StarBucks.UI
             orderControl.Visibility = Visibility.Visible;
 
             // Table 번호
-            orderControl.tableIdx = id;
-            var item = App.SeatData.lstSeat.Where(x => x.Id == id).FirstOrDefault();
-            orderControl.setOrderList(item.lstDrink);
+            orderControl.SetSeatIdOnOrder(id);
+            //var item = App.SeatData.lstSeat.Where(x => x.Id == id).FirstOrDefault();
+            //orderControl.setOrderList(item.lstDrink);
 
             lstSeat.SelectedIndex = -1;
         }
