@@ -244,6 +244,7 @@ namespace StarBucks
         {
             onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = orderedSeat.lstDrink });
             //InitOrderControl();
+            selectedDrink.Items.Refresh();
             this.Seatid = 0;
             this.Visibility = Visibility.Collapsed;
         }
