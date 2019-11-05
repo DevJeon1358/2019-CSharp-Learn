@@ -84,20 +84,17 @@ namespace StarBucks
             selectedDrink.Items.Refresh();
         }
 
-        private void AddListItems()
+        private void AddListItems() // OrderControl 로딩 시 메뉴 리셋
         {
-            lvDrink.Items.Clear();
-
-            foreach (Drink drink in Drinks)
-            {
-                DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
-                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
-                lvDrink.Items.Add(drinkControl);
-            }
+            AllMenuShow();
         }
 
         private void Select_All(object sender, RoutedEventArgs e)   // 전체 메뉴 선택 시
+        {
+            AllMenuShow();
+        }
+
+        private void AllMenuShow()
         {
             lvDrink.Items.Clear();
 
@@ -131,13 +128,10 @@ namespace StarBucks
 
             if (temp == null)
             {
-                orderedSeat.lstDrink.Add(drink);
-                seat.lstDrink.Add(drink); //??
+                var newItem = drink.Clone();
+                orderedSeat.lstDrink.Add(newItem);
+                seat.lstDrink.Add(newItem); //??
             }
-
-            //int TotalPrice = SetTotalPrice();
-
-            //totalPrice.Text = TotalPrice + "원";
 
             totalPrice.Text = SetTotalPrice() + "원";
 
