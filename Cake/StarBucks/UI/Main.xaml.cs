@@ -31,9 +31,14 @@ namespace StarBucks.UI
         {
             // 주문이 완료됨
             int idx = args.id;
-            var item = App.SeatData.lstSeat.Where(x => x.Id == idx).FirstOrDefault();
 
-            item.lstDrink = args.orderedDrinks;
+            //만약 id와 주문목록 리스트가 넘어온다면
+            //var item = App.SeatData.lstSeat.Where(x => x.Id == idx).FirstOrDefault();
+
+            //item.lstDrink = args.orderedDrinks;
+
+            //id만 넘어오는경우 = 오더쪽에서 데이터처리를 다해주는 경우
+            App.SeatData.lstSeat.Where(x => x.Id == idx).FirstOrDefault().lstDrink = args.orderedDrinks;
 
             lstSeat.Items.Clear();
             AddSeatitems();
