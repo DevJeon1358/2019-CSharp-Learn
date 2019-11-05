@@ -113,7 +113,7 @@ namespace StarBucks
         {
             lvDrink.Items.Clear();
             string category = ((ListBoxItem)sender).Name;
-            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
+            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.GetCategoryList(category));
 
             foreach (Drink drink in categoryDrinkList)
             {
@@ -183,16 +183,16 @@ namespace StarBucks
             //}
         }
 
-        private void cashPay(object sender, RoutedEventArgs e)
+        private void CashPay(object sender, RoutedEventArgs e)
         {
             //DB에 주문내역 전달,결제타입은 현금
-            addPayment(orderedSeat.lstDrink, payments.paymentMethod.CASH);
+            AddPayment(orderedSeat.lstDrink, payments.paymentMethod.CASH);
         }
 
-        private void cardPay(object sender, RoutedEventArgs e)
+        private void CardPay(object sender, RoutedEventArgs e)
         {
             //DB에 주문내역 전달,결제타입은 카드
-            addPayment(orderedSeat.lstDrink, payments.paymentMethod.CARD);
+            AddPayment(orderedSeat.lstDrink, payments.paymentMethod.CARD);
         }
 
         private string OrderedDrinkListString(List<Drink> OrderedDrink)
@@ -205,7 +205,7 @@ namespace StarBucks
             return menuList;
         }
 
-        private void addPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
+        private void AddPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
         {
             string menuList = OrderedDrinkListString(OrderedDrink);
             if (MessageBox.Show(menuList + "결제하시겠습니까?", SetTotalPrice().ToString() + " 원 ", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -216,12 +216,12 @@ namespace StarBucks
                     for(int i= 0; i < drink.Count; i++)
                     {
                         //To-Do Connect Database using Starbucks.Analytics
-                        statics.addPayment(drink.Name, drink.Category, paymentMethod, drink.Price, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
+                        statics.AddPayment(drink.Name, drink.Category, paymentMethod, drink.Price, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
                     }
                 }
 
                 // Analytics Window의 Data 를 Refresh 함
-                App.analytics.refreshData();
+                App.analytics.RefreshData();
 
                 BackHome();
             }

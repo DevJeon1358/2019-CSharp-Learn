@@ -74,7 +74,7 @@ namespace StarBucks
                 listDrink[i].Category = "피지오";
             }
         }
-        public List<Drink> getCategoryList(string a)
+        public List<Drink> GetCategoryList(string a)
         {
             if (listDrink == null)
                 return null;
