@@ -82,6 +82,7 @@ namespace StarBucks
 
             selectedDrink.ItemsSource = orderedSeat.lstDrink;
             selectedDrink.Items.Refresh();
+            totalPrice.Text = SetTotalPrice() + "원";    // 테이블 나간 후 다시 다른 테이블에 들어갈 때 합계가 올바르게 바뀌기 위해
         }
 
         private void AddListItems() // OrderControl 로딩 시 메뉴 리셋
@@ -101,7 +102,7 @@ namespace StarBucks
             foreach (Drink drink in Drinks)
             {
                 DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
+                drinkControl.SetItem(drink.Clone());
                 drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
@@ -115,7 +116,7 @@ namespace StarBucks
             foreach (Drink drink in categoryDrinkList)
             {
                 DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
+                drinkControl.SetItem(drink.Clone());
                 drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
