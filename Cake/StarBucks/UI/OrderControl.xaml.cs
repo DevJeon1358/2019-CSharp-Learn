@@ -102,7 +102,7 @@ namespace StarBucks
             foreach (Drink drink in Drinks)
             {
                 DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink.Clone());
+                drinkControl.SetItem(drink);    // Clone은 필요없다고 느껴져 지움
                 drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
@@ -116,7 +116,7 @@ namespace StarBucks
             foreach (Drink drink in categoryDrinkList)
             {
                 DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink.Clone());
+                drinkControl.SetItem(drink);    // Clone은 필요없다고 느껴져 지움
                 drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
@@ -125,13 +125,17 @@ namespace StarBucks
         private void OnMouseDowndrink(Drink drink, Seat seat)   // menu 클릭 시 OrderedDrink 리스트로 추가
         {
             var temp = orderedSeat.lstDrink.Where(x => x.Name == drink.Name).FirstOrDefault();
-            drink.Count++;
+            //drink.Count++;
 
-            if (temp == null)
+            if (temp == null)   // temp가 비었다면 새로 drink 객체를 클론하여 orderedSeat.lstDrink에 추가
             {
                 var newItem = drink.Clone();
+                newItem.Count++;
                 orderedSeat.lstDrink.Add(newItem);
-                seat.lstDrink.Add(newItem); //??
+            }
+            else                // temp가 안비었다면 count++
+            {
+                temp.Count++;
             }
 
             totalPrice.Text = SetTotalPrice() + "원";
@@ -147,19 +151,14 @@ namespace StarBucks
             ImageViewer.Source = new BitmapImage(new Uri(drink.ImagePath, UriKind.Relative));
         }
 
-        private int SetTotalPrice()
-        {//총액
+        private int SetTotalPrice()     // 총액
+        {
             int sum = 0;
 
             foreach (Drink drink in orderedSeat.lstDrink)
             {
                 sum += (drink.Price * drink.Count);
             }
-
-            // foreach (var item in lvDrink.Items)
-            //{
-            //      sum += (drink.Price * drink.Count);
-            //}
 
             return sum;
         }
@@ -229,16 +228,10 @@ namespace StarBucks
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
-        //public void setOrderList(List<Drink> drinks)
-        //{
-        //    this.OrderedDrink = drinks;
-        //    selectedDrink.Items.Refresh();
-        //}
-
+        
         private void BackHome(object sender, RoutedEventArgs e) // 주문하고 뒤로가기 시 사용
         {
             onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = orderedSeat.lstDrink });
-            //InitOrderControl();
             selectedDrink.Items.Refresh();
             this.Seatid = 0;
             this.Visibility = Visibility.Collapsed;
@@ -262,7 +255,5 @@ namespace StarBucks
         {
 
         }
-
-        
     }
 }
