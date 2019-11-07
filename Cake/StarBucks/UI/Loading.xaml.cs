@@ -22,6 +22,7 @@ namespace StarBucks.UI
         {
             Task.Run(delegate {
                 Thread.Sleep(3000);
+                App.SeatData.Load(); //seatData로드
                 OpenMainWindow();
             });
         }
