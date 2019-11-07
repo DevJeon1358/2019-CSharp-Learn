@@ -76,6 +76,9 @@
       <DependentUpon>DrinkControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DrinkDataSource.cs" />
+    <Compile Include="UI\login.xaml.cs">
+      <DependentUpon>login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\OrderControl.xaml.cs">
       <DependentUpon>OrderControl.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\OrderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,6 +165,10 @@
     <ProjectReference Include="..\StarBucks.Database\StarBucks.Database.csproj">
       <Project>{44f9821e-758b-4e74-b7a7-b9319d9b1dd7}</Project>
       <Name>StarBucks.Database</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StarBucks.Network\StarBucks.Network.csproj">
+      <Project>{87CFE839-13BC-4DF7-A1DE-1E92CF050093}</Project>
+      <Name>StarBucks.Network</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

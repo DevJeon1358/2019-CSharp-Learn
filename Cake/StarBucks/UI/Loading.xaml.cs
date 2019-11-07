@@ -11,7 +11,7 @@ namespace StarBucks.UI
     /// </summary>
     public partial class Loading : Window
     {
-        Main main = new Main();
+        login loginWindow = new login();
 
         public Loading()
         {
@@ -22,15 +22,15 @@ namespace StarBucks.UI
         {
             Task.Run(delegate {
                 Thread.Sleep(3000);
-                OpenMainWindow();
+                OpenLoginWindow();
             });
         }
 
-        private void OpenMainWindow()
+        private void OpenLoginWindow()
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
-                main.Show();
+                loginWindow.Show();
                 this.Close();
             }));
         }
