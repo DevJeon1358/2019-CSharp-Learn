@@ -229,6 +229,7 @@ namespace StarBucks
             orderedSeat.lstDrink.Clear();
             lastOrderTime.Text = "";       // 결제 혹은 전체삭제 시 최근 주문시간 삭제
             selectedDrink.Items.Refresh();
+            ImageViewer.Source = null;     // 이미지 뷰어 널값처리
             InitMenu();
             totalPrice.Text = "";          // 합계 초기화
             orderedSeat.OrderTime = "";    // 최근 주문시간 초기화
@@ -278,6 +279,7 @@ namespace StarBucks
 
             itemsSource.Remove(drink);
             SelectedDrinkRefresh(drink);
+            ImageViewer.Source = null;     // 이미지 뷰어 널값처리
         }
 
         private void SelectedDrinkRefresh(Drink drink)  // 주문 메뉴에서 버튼 클릭 후 값이 변경 되었을 때, 합계, 이미지 등 새로 고침
