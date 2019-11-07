@@ -148,7 +148,7 @@
                                                 <ColumnDefinition Width="88"/>
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
-                                                <Button x:Name="selectClear" Click="SelectClear_Click" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center">X</Button>
+                                                <Button x:Name="selectClear" Click="SelectRemove_Click" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center">X</Button>
                                             </Grid>
                                             <Grid Grid.Column="1">
                                                 <TextBlock Text="{Binding Name}" Style="{StaticResource OrderedNameStyle}"></TextBlock>

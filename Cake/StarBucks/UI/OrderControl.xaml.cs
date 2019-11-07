@@ -87,11 +87,6 @@ namespace StarBucks
             totalPrice.Text = SetTotalPrice() + "원";    // 테이블 나간 후 다시 다른 테이블에 들어갈 때 합계가 올바르게 바뀌기 위해
         }
 
-        //private void AddListItems() // OrderControl 로딩 시 메뉴 리셋
-        //{
-        //    AllMenuShow();
-        //}
-
         private void Select_All(object sender, RoutedEventArgs e)   // 전체 메뉴 선택 시
         {
             AllMenuShow();
@@ -142,13 +137,13 @@ namespace StarBucks
 
             totalPrice.Text = SetTotalPrice() + "원";
 
-            SelectMenuImage(drink);
+            SelectDrinkImage(drink);
 
             //selectedDrink.ItemsSource = orderedSeat.lstDrink;
             selectedDrink.Items.Refresh();
         }
 
-        private void SelectMenuImage(Drink drink)
+        private void SelectDrinkImage(Drink drink)
         {
             ImageViewer.Source = new BitmapImage(new Uri(drink.ImagePath, UriKind.Relative));
         }
@@ -163,20 +158,6 @@ namespace StarBucks
             }
 
             return sum;
-        }
-
-        private void PlusMinusDrink(object sender, RoutedEventArgs e)   // plus minus 버튼 클릭 시 이벤트
-        {
-            var type = ((Button)sender).Name;
-
-            //if (type == "plus")
-            //{
-                
-            //}
-            //else
-            //{
-
-            //}
         }
 
         private void CashPay(object sender, RoutedEventArgs e)
@@ -256,9 +237,50 @@ namespace StarBucks
             InitOrderControl();
         }
 
-        private void SelectClear_Click(object sender, RoutedEventArgs e)
+        private void PlusMinusDrink(object sender, RoutedEventArgs e)   // plus minus 버튼 클릭 시 이벤트
         {
+            var type = ((Button)sender).Name;
+            var drink = ((ListViewItem)selectedDrink.ContainerFromElement(sender as Button)).Content as Drink;
 
+            if (type == "plus")  // button의 name이 plus라면
+            {
+                drink.Count++;
+            }
+            else  // button의 namedl minus라면
+            {
+                if (drink.Count == 1)  // Count가 1 일때 minus 버튼을 누르면 삭제
+                {
+                    ////selectedDrink.Items
+                    //selectedDrink.ItemsSource       Items와 ItemsSource 차이가 궁금함!!
+                    RemoveDrink(drink);
+                }
+                else  // 아닐 때는 카운트 감소
+                {
+                    drink.Count--;
+                }
+            }
+            SelectedDrinkRefresh(drink);
+        }
+
+        private void SelectRemove_Click(object sender, RoutedEventArgs e)   // 주문 메뉴에서 메뉴 하나 지울 때
+        {
+            var drink = ((ListViewItem)selectedDrink.ContainerFromElement(sender as Button)).Content as Drink;
+            RemoveDrink(drink);
+        }
+
+        private void RemoveDrink(Drink drink)   // drink 받아서 selectedDrink에서 삭제
+        {
+            var itemsSource = selectedDrink.ItemsSource as List<Drink>;
+
+            itemsSource.Remove(drink);
+            SelectedDrinkRefresh(drink);
+        }
+
+        private void SelectedDrinkRefresh(Drink drink)  // 주문 메뉴에서 버튼 클릭 후 값이 변경 되었을 때, 합계, 이미지 등 새로 고침
+        {
+            SelectDrinkImage(drink);
+            totalPrice.Text = SetTotalPrice() + "원";
+            selectedDrink.Items.Refresh();
         }
     }
 }
