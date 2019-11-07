@@ -22,6 +22,7 @@ namespace StarBucks
         private Boolean menuBackgroundWorkerFinished = false;
         private Boolean todayBackgroundWorkerFinished = false;
         private Boolean categoryBackgroundWorkerFinished = false;
+        private int todayAmount = 0;
 
         #endregion
 
@@ -98,7 +99,6 @@ namespace StarBucks
 
         private DataSet GetTodayStatics()
         {
-            var todayAmount = 0;
             DataSet ds = stat.GetPayments();
 
             ds.Tables[0].Columns.Add("paymentMethodText", Type.GetType("System.String"));
@@ -435,5 +435,10 @@ namespace StarBucks
         }
 
         #endregion
+
+        private void SendTodayAmount_Click(object sender, RoutedEventArgs e)
+        {
+            App.socketController.sendMessage("@" + App.loginID + "#오늘 판매량:" + todayAmount.ToString());
+        }
     }
 }
