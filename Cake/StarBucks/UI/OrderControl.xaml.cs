@@ -61,7 +61,7 @@ namespace StarBucks
             App.DrinkData.Load();
             // OrderedDrink = new List<Drink>();
             InitMenu();
-            AddListItems();
+            AllMenuShow();
         }
 
         private void InitMenu()
@@ -85,10 +85,10 @@ namespace StarBucks
             totalPrice.Text = SetTotalPrice() + "원";    // 테이블 나간 후 다시 다른 테이블에 들어갈 때 합계가 올바르게 바뀌기 위해
         }
 
-        private void AddListItems() // OrderControl 로딩 시 메뉴 리셋
-        {
-            AllMenuShow();
-        }
+        //private void AddListItems() // OrderControl 로딩 시 메뉴 리셋
+        //{
+        //    AllMenuShow();
+        //}
 
         private void Select_All(object sender, RoutedEventArgs e)   // 전체 메뉴 선택 시
         {
@@ -142,7 +142,7 @@ namespace StarBucks
 
             SelectMenuImage(drink);
 
-            selectedDrink.ItemsSource = orderedSeat.lstDrink;
+            //selectedDrink.ItemsSource = orderedSeat.lstDrink;
             selectedDrink.Items.Refresh();
         }
 
@@ -243,7 +243,8 @@ namespace StarBucks
             selectedDrink.Items.Refresh();
             InitMenu();
             totalPrice.Text = "";
-            AddListItems();
+            //AllMenuShow();
+            //AddListItems();
         }
 
         private void AllClear_Click(object sender, RoutedEventArgs e)
