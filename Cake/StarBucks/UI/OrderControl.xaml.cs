@@ -78,7 +78,9 @@ namespace StarBucks
             Seatid = id;
             tableId.Text = Seatid.ToString();
 
-            orderedSeat = App.SeatData.lstSeat.Where(x => x.Id == Seatid).FirstOrDefault();            
+            orderedSeat = App.SeatData.lstSeat.Where(x => x.Id == Seatid).FirstOrDefault();
+
+            lastOrderTime.Text = orderedSeat.OrderTime;
 
             selectedDrink.ItemsSource = orderedSeat.lstDrink;
             selectedDrink.Items.Refresh();
@@ -225,12 +227,14 @@ namespace StarBucks
         {
             onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = new List<Drink>() });
             this.Seatid = 0;
+            this.orderedSeat.OrderTime = null;
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
         
         private void BackHome(object sender, RoutedEventArgs e) // 주문하고 뒤로가기 시 사용
         {
+            this.orderedSeat.OrderTime = DateTime.Now.ToString();
             onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = orderedSeat.lstDrink });
             selectedDrink.Items.Refresh();
             this.Seatid = 0;
