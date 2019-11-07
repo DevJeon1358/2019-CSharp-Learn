@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StarBucks.Network;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,5 +17,7 @@ namespace StarBucks
         public static SeatDataSource SeatData = new SeatDataSource();
         public static DrinkDataSource DrinkData = new DrinkDataSource();
         public static analytics analytics = new analytics();
+        public static String loginID;
+        public static socket socketController;
     }
 }

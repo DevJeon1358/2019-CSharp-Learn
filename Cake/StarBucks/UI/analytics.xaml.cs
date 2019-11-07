@@ -22,6 +22,7 @@ namespace StarBucks
         private Boolean menuBackgroundWorkerFinished = false;
         private Boolean todayBackgroundWorkerFinished = false;
         private Boolean categoryBackgroundWorkerFinished = false;
+        private int todayAmount = 0;
 
         #endregion
 
@@ -33,14 +34,14 @@ namespace StarBucks
             stat = new statics();
 
             // 차트 초기 설정
-            initBaseChart();
+            InitBaseChart();
         }
 
         #region Statics
 
-        private DataSet getMenuStatics()
+        private DataSet GetMenuStatics()
         {
-            DataSet ds = stat.getPayments();
+            DataSet ds = stat.GetPayments();
 
             ds.Tables[0].Columns.Add("paymentMethodText", Type.GetType("System.String"));
 
@@ -96,10 +97,9 @@ namespace StarBucks
             return ds;
         }
 
-        private DataSet getTodayStatics()
+        private DataSet GetTodayStatics()
         {
-            var todayAmount = 0;
-            DataSet ds = stat.getPayments();
+            DataSet ds = stat.GetPayments();
 
             ds.Tables[0].Columns.Add("paymentMethodText", Type.GetType("System.String"));
 
@@ -138,9 +138,9 @@ namespace StarBucks
             return ds;
         }
 
-        private DataSet getCategoryStatics()
+        private DataSet GetCategoryStatics()
         {
-            DataSet ds = stat.getPayments();
+            DataSet ds = stat.GetPayments();
 
             ds.Tables[0].Columns.Add("paymentMethodText", Type.GetType("System.String"));
 
@@ -199,7 +199,7 @@ namespace StarBucks
 
         #region Charts
 
-        private void initBaseChart()
+        private void InitBaseChart()
         {
             var todayCollection = new SeriesCollection
             {
@@ -243,7 +243,7 @@ namespace StarBucks
             this.category_chart.Series = categoryCollection;
         }
 
-        private void initTodayChart(DataSet ds)
+        private void InitTodayChart(DataSet ds)
         {
             var timeIdxCount = new int[24];
             var cardIdxCount = new int[24];
@@ -283,7 +283,7 @@ namespace StarBucks
             }));
         }
 
-        private void initMenuChart(DataSet ds)
+        private void InitMenuChart(DataSet ds)
         {
             var tempValue = new ChartValues<double> { };
 
@@ -309,7 +309,7 @@ namespace StarBucks
             }));
         }
 
-        private void initCategoryChart(DataSet ds)
+        private void InitCategoryChart(DataSet ds)
         {
             var tempValues = new ChartValues<double> { };
             var LabelsList = new List<String>();
@@ -334,7 +334,7 @@ namespace StarBucks
             }));
         }
 
-        public void refreshData()
+        public void RefreshData()
         {
             BackgroundWorker menuBackgroundWorker = new BackgroundWorker();
             BackgroundWorker todayBackgroundWorker = new BackgroundWorker();
@@ -359,27 +359,27 @@ namespace StarBucks
 
         private void CategoryBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var categoryDataset = getCategoryStatics();
-            initCategoryChart(categoryDataset);
+            var categoryDataset = GetCategoryStatics();
+            InitCategoryChart(categoryDataset);
         }
 
         private void TodayBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var todayDataset = getTodayStatics();
-            initTodayChart(todayDataset);
+            var todayDataset = GetTodayStatics();
+            InitTodayChart(todayDataset);
         }
 
         private void MenuBackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var menuDataset = getMenuStatics();
-            initMenuChart(menuDataset);
+            var menuDataset = GetMenuStatics();
+            InitMenuChart(menuDataset);
         }
 
         private void CategoryBackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (todayBackgroundWorkerFinished == true && menuBackgroundWorkerFinished == true)
             {
-                onLoadFinished();
+                OnLoadFinished();
             }
 
             categoryBackgroundWorkerFinished = true;
@@ -389,7 +389,7 @@ namespace StarBucks
         {
             if (categoryBackgroundWorkerFinished == true && menuBackgroundWorkerFinished == true)
             {
-                onLoadFinished();
+                OnLoadFinished();
             }
 
             todayBackgroundWorkerFinished = true;
@@ -399,7 +399,7 @@ namespace StarBucks
         {
             if (categoryBackgroundWorkerFinished == true && todayBackgroundWorkerFinished == true)
             {
-                onLoadFinished();
+                OnLoadFinished();
             }
 
             menuBackgroundWorkerFinished = true;
@@ -409,7 +409,7 @@ namespace StarBucks
 
         #region Events
 
-        private void onLoadFinished()
+        private void OnLoadFinished()
         {
             categoryBackgroundWorkerFinished = false;
             todayBackgroundWorkerFinished = false;
@@ -424,16 +424,21 @@ namespace StarBucks
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             this.Loading.Visibility = Visibility.Visible;
-            refreshData();
+            RefreshData();
         }
 
-        private void onRefreshClick(object sender, RoutedEventArgs e)
+        private void OnRefreshClick(object sender, RoutedEventArgs e)
         {
             this.Loading.Visibility = Visibility.Visible;
 
-            refreshData();
+            RefreshData();
         }
 
         #endregion
+
+        private void SendTodayAmount_Click(object sender, RoutedEventArgs e)
+        {
+            App.socketController.sendMessage("@" + App.loginID + "#오늘 판매량:" + todayAmount.ToString());
+        }
     }
 }

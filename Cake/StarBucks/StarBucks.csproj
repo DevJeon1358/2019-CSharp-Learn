@@ -76,6 +76,9 @@
       <DependentUpon>DrinkControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\DrinkDataSource.cs" />
+    <Compile Include="UI\login.xaml.cs">
+      <DependentUpon>login.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\OrderControl.xaml.cs">
       <DependentUpon>OrderControl.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\OrderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,6 +166,10 @@
       <Project>{44f9821e-758b-4e74-b7a7-b9319d9b1dd7}</Project>
       <Name>StarBucks.Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StarBucks.Network\StarBucks.Network.csproj">
+      <Project>{87CFE839-13BC-4DF7-A1DE-1E92CF050093}</Project>
+      <Name>StarBucks.Network</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="UI\Assets\Espresso\라벤더 카페 브레베.jpg" />
@@ -174,6 +185,25 @@
     <Resource Include="UI\Assets\Frappuccino\제주 쑥떡 크림 프라푸치노.jpg" />
     <Resource Include="UI\Assets\Frappuccino\초콜릿 크림 프라푸치노.jpg" />
     <Resource Include="UI\Assets\Frappuccino\화이트 딸기 크림 프라푸치노.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="UI\Assets\BrewCoffe\아이스 커피.jpg" />
+    <Resource Include="UI\Assets\BrewCoffe\오늘의 커피.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Assets\StarbucksFigio\매직 팝 스플래쉬 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\블랙 티 레모네이드 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\쿨 라임 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\패션 탱고 티 레모네이드 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\핑크 자몽 피지오.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Assets\Blended\딸기 요거트 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\망고 바나나 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\망고 패션 후르츠 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\익스트림 티 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\자몽 셔벗 블렌디드.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

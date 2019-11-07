@@ -24,6 +24,7 @@
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
                                 <Label x:Name="todayAmountLabel" Content="오늘 판매량: 000,000 원"/>
+                                <Button x:Name="sendTodayAmount" Content="오늘 판매량 전송" Width="100" HorizontalAlignment="Right" Click="SendTodayAmount_Click"/>
                             </Grid>
                             <Grid Grid.Row="1">
                                 <DataGrid x:Name="today" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="auto" CanUserDeleteRows="False" CanUserAddRows="False" AutoGenerateColumns="False" IsReadOnly="True">
