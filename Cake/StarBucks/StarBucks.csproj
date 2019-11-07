@@ -175,5 +175,24 @@
     <Resource Include="UI\Assets\Frappuccino\초콜릿 크림 프라푸치노.jpg" />
     <Resource Include="UI\Assets\Frappuccino\화이트 딸기 크림 프라푸치노.jpg" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="UI\Assets\BrewCoffe\아이스 커피.jpg" />
+    <Resource Include="UI\Assets\BrewCoffe\오늘의 커피.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Assets\StarbucksFigio\매직 팝 스플래쉬 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\블랙 티 레모네이드 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\쿨 라임 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\패션 탱고 티 레모네이드 피지오.jpg" />
+    <Resource Include="UI\Assets\StarbucksFigio\핑크 자몽 피지오.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UI\Assets\Blended\딸기 요거트 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\망고 바나나 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\망고 패션 후르츠 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\익스트림 티 블렌디드.jpg" />
+    <Resource Include="UI\Assets\Blended\자몽 셔벗 블렌디드.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

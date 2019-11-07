@@ -22,26 +22,28 @@ namespace StarBucks
         public List<Drink> orderedDrinks;
     }
 
+    //public int tableIdx
+    //{
+    //    get
+    //    {
+    //        return (Convert.ToInt32(tableId.Text));
+    //    }
+    //    set
+    //    {
+    //        tableId.Text = value.ToString();
+    //    }
+    //}
+
     /// <summary>
     /// Interaction logic for OrderControl.xaml
     /// </summary>
     public partial class OrderControl : UserControl
     { 
-        public List<Drink> OrderedDrink { get; set; }
+        //public List<Drink> OrderedDrink { get; set; }
+        private Seat orderedSeat = new Seat();
         private List<Drink> Drinks = new List<Drink>();
         private statics statics;
-
-        public int tableIdx
-        {
-            get
-            {
-                return (Convert.ToInt32(tableId.Text));
-            }
-            set
-            {
-                tableId.Text = value.ToString();
-            }
-        }
+        private int Seatid = 0;
 
         public delegate void OrderHandler(object sender, OrderEventArgs args);
         public event OrderHandler onOrder;
@@ -57,7 +59,7 @@ namespace StarBucks
         private void OrderControl_Loaded(object sender, RoutedEventArgs e)
         {
             App.DrinkData.Load();
-            OrderedDrink = new List<Drink>();
+            // OrderedDrink = new List<Drink>();
             InitMenu();
             AddListItems();
         }
@@ -71,69 +73,50 @@ namespace StarBucks
             }
         }
 
-        private void AddListItems()
+        public void SetSeatIdOnOrder(int id)
         {
-            lvDrink.Items.Clear();
+            Seatid = id;
+            tableId.Text = Seatid.ToString();
 
-            foreach (Drink drink in Drinks)
-            {
-                DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
-                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
-                lvDrink.Items.Add(drinkControl);
-            }
+            orderedSeat = App.SeatData.lstSeat.Where(x => x.Id == Seatid).FirstOrDefault();            
+
+            selectedDrink.ItemsSource = orderedSeat.lstDrink;
+            selectedDrink.Items.Refresh();
+            totalPrice.Text = SetTotalPrice() + "원";    // 테이블 나간 후 다시 다른 테이블에 들어갈 때 합계가 올바르게 바뀌기 위해
+        }
+
+        private void AddListItems() // OrderControl 로딩 시 메뉴 리셋
+        {
+            AllMenuShow();
         }
 
         private void Select_All(object sender, RoutedEventArgs e)   // 전체 메뉴 선택 시
         {
+            AllMenuShow();
+        }
+
+        private void AllMenuShow()
+        {
             lvDrink.Items.Clear();
 
             foreach (Drink drink in Drinks)
             {
                 DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
+                drinkControl.SetItem(drink);    // Clone은 필요없다고 느껴져 지움
                 drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
         }
-        private void Select_ColdBrew(object sender, RoutedEventArgs e)  // 콜드브루 선택 시
+        private void Select_Menu(object sender, RoutedEventArgs e)  // 각 메뉴 선택 시
         {
             lvDrink.Items.Clear();
-            string category = "콜드브루";
-            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
+            string category = ((ListBoxItem)sender).Name;
+            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.GetCategoryList(category));
 
             foreach (Drink drink in categoryDrinkList)
             {
                 DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
-                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
-                lvDrink.Items.Add(drinkControl);
-            }
-        }
-        private void Select_Espresso(object sender, RoutedEventArgs e)  // 에스프레소 선택 시
-        {
-            lvDrink.Items.Clear();
-            string category = "에스프레소";
-            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
-
-            foreach (Drink drink in categoryDrinkList)
-            {
-                DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
-                drinkControl.OnMouseDownDrink += OnMouseDowndrink;
-                lvDrink.Items.Add(drinkControl);
-            }
-        }
-        private void Select_Frappuccino(object sender, RoutedEventArgs e)   // 프라푸치노 선택 시
-        {
-            lvDrink.Items.Clear();
-            string category = "프라푸치노";
-            List<Drink> categoryDrinkList = new List<Drink>(App.DrinkData.getCategoryList(category));
-
-            foreach (Drink drink in categoryDrinkList)
-            {
-                DrinkControl drinkControl = new DrinkControl();
-                drinkControl.SetItem(drink);
+                drinkControl.SetItem(drink);    // Clone은 필요없다고 느껴져 지움
                 drinkControl.OnMouseDownDrink += OnMouseDowndrink;
                 lvDrink.Items.Add(drinkControl);
             }
@@ -141,22 +124,25 @@ namespace StarBucks
 
         private void OnMouseDowndrink(Drink drink, Seat seat)   // menu 클릭 시 OrderedDrink 리스트로 추가
         {
-            var temp = OrderedDrink.Where(x => x.Name == drink.Name).FirstOrDefault();
-            drink.Count++;
+            var temp = orderedSeat.lstDrink.Where(x => x.Name == drink.Name).FirstOrDefault();
+            //drink.Count++;
 
-            if (temp == null)
+            if (temp == null)   // temp가 비었다면 새로 drink 객체를 클론하여 orderedSeat.lstDrink에 추가
             {
-                OrderedDrink.Add(drink);
-                seat.lstDrink.Add(drink);
+                var newItem = drink.Clone();
+                newItem.Count++;
+                orderedSeat.lstDrink.Add(newItem);
+            }
+            else                // temp가 안비었다면 count++
+            {
+                temp.Count++;
             }
 
-            int TotalPrice = SetTotalPrice();
-
-            totalPrice.Text = TotalPrice + "원";
+            totalPrice.Text = SetTotalPrice() + "원";
 
             SelectMenuImage(drink);
 
-            selectedDrink.ItemsSource = OrderedDrink;
+            selectedDrink.ItemsSource = orderedSeat.lstDrink;
             selectedDrink.Items.Refresh();
         }
 
@@ -165,13 +151,13 @@ namespace StarBucks
             ImageViewer.Source = new BitmapImage(new Uri(drink.ImagePath, UriKind.Relative));
         }
 
-        private int SetTotalPrice()
-        {//총액
+        private int SetTotalPrice()     // 총액
+        {
             int sum = 0;
 
-            foreach (var item in lvDrink.Items)
+            foreach (Drink drink in orderedSeat.lstDrink)
             {
-                sum += (item as DrinkControl).GetTotalPrice();
+                sum += (drink.Price * drink.Count);
             }
 
             return sum;
@@ -191,16 +177,16 @@ namespace StarBucks
             //}
         }
 
-        private void cashPay(object sender, RoutedEventArgs e)
+        private void CashPay(object sender, RoutedEventArgs e)
         {
             //DB에 주문내역 전달,결제타입은 현금
-            addPayment(OrderedDrink, payments.paymentMethod.CASH);
+            AddPayment(orderedSeat.lstDrink, payments.paymentMethod.CASH);
         }
 
-        private void cardPay(object sender, RoutedEventArgs e)
+        private void CardPay(object sender, RoutedEventArgs e)
         {
             //DB에 주문내역 전달,결제타입은 카드
-            addPayment(OrderedDrink, payments.paymentMethod.CARD);
+            AddPayment(orderedSeat.lstDrink, payments.paymentMethod.CARD);
         }
 
         private string OrderedDrinkListString(List<Drink> OrderedDrink)
@@ -213,7 +199,7 @@ namespace StarBucks
             return menuList;
         }
 
-        private void addPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
+        private void AddPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
         {
             string menuList = OrderedDrinkListString(OrderedDrink);
             if (MessageBox.Show(menuList + "결제하시겠습니까?", SetTotalPrice().ToString() + " 원 ", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -224,12 +210,12 @@ namespace StarBucks
                     for(int i= 0; i < drink.Count; i++)
                     {
                         //To-Do Connect Database using Starbucks.Analytics
-                        statics.addPayment(drink.Name, drink.Category, paymentMethod, drink.Price, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
+                        statics.AddPayment(drink.Name, drink.Category, paymentMethod, drink.Price, string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now));
                     }
                 }
 
                 // Analytics Window의 Data 를 Refresh 함
-                App.analytics.refreshData();
+                App.analytics.RefreshData();
 
                 BackHome();
             }
@@ -237,32 +223,25 @@ namespace StarBucks
 
         private void BackHome()     // 결제 시
         {
-            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = new List<Drink>() });
-            this.tableIdx = 0;
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = new List<Drink>() });
+            this.Seatid = 0;
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
-        public void setOrderList(List<Drink> drinks)
+        
+        private void BackHome(object sender, RoutedEventArgs e) // 주문하고 뒤로가기 시 사용
         {
-            this.OrderedDrink = drinks;
+            onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = orderedSeat.lstDrink });
             selectedDrink.Items.Refresh();
-        }
-
-        private void BackHome(object sender, RoutedEventArgs e)
-        {
-            
-            onOrder.Invoke(this, new OrderEventArgs() { id = this.tableIdx, orderedDrinks = OrderedDrink });
-            InitOrderControl();
-            this.tableIdx = 0;
+            this.Seatid = 0;
             this.Visibility = Visibility.Collapsed;
         }
 
-        private void InitOrderControl()
+        private void InitOrderControl()     // 결제 시 or 주문 리스트 전체 삭제 시 사용
         {
-            OrderedDrink.Clear();
+            orderedSeat.lstDrink.Clear();
             selectedDrink.Items.Refresh();
             InitMenu();
-            OrderedDrink = new List<Drink>();
             totalPrice.Text = "";
             AddListItems();
         }
@@ -276,7 +255,5 @@ namespace StarBucks
         {
 
         }
-
-        
     }
 }
