@@ -208,14 +208,16 @@ namespace StarBucks
         {
             onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = new List<Drink>() });
             this.Seatid = 0;
-            this.orderedSeat.OrderTime = null;
             InitOrderControl();
             this.Visibility = Visibility.Collapsed;
         }
         
         private void BackHome(object sender, RoutedEventArgs e) // 주문하고 뒤로가기 시 사용
         {
-            this.orderedSeat.OrderTime = DateTime.Now.ToString();
+            if(this.orderedSeat.lstDrink.Count != 0) //주문내역이 없을경우 최근 주문시간은 존재하지않는다.
+            {
+                this.orderedSeat.OrderTime = DateTime.Now.ToString();
+            }
             onOrder.Invoke(this, new OrderEventArgs() { id = this.Seatid, orderedDrinks = orderedSeat.lstDrink });
             selectedDrink.Items.Refresh();
             this.Seatid = 0;
@@ -225,9 +227,11 @@ namespace StarBucks
         private void InitOrderControl()     // 결제 시 or 주문 리스트 전체 삭제 시 사용
         {
             orderedSeat.lstDrink.Clear();
+            lastOrderTime.Text = "";       // 결제 혹은 전체삭제 시 최근 주문시간 삭제
             selectedDrink.Items.Refresh();
             InitMenu();
-            totalPrice.Text = "";
+            totalPrice.Text = "";          // 합계 초기화
+            orderedSeat.OrderTime = "";    // 최근 주문시간 초기화
             //AllMenuShow();
             //AddListItems();
         }

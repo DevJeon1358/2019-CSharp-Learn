@@ -46,10 +46,8 @@ namespace StarBucks.UI
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            App.SeatData.Load();
-
-            AddSeatitems();
             StartTime();
+            AddSeatitems();
         }
 
         private void AddSeatitems()
@@ -82,13 +80,14 @@ namespace StarBucks.UI
             {
                 return;
             }
+
             SeatControl seatControl = lstSeat.SelectedItem as SeatControl; //선택된 SeatCtrl에서 
             int id = seatControl.GetSeatId(); // seat id를 가져오기
 
             //OrderControl 보이기
             orderControl.Visibility = Visibility.Visible;
 
-            // Table 번호
+            // Seat 번호
             orderControl.SetSeatIdOnOrder(id);
             //var item = App.SeatData.lstSeat.Where(x => x.Id == id).FirstOrDefault();
             //orderControl.setOrderList(item.lstDrink);
