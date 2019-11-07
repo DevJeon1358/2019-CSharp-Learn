@@ -35,11 +35,6 @@ namespace StarBucks
             SetSeatDrink(seat);
         }
 
-        public void Refresh()
-        {
-
-        }
-
         public void SetSeatDrink(Seat seat)
         {
             foreach (Drink drink in seat.lstDrink)
