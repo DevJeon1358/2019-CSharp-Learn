@@ -84,7 +84,7 @@
                             <WrapPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
-                    
+
                 </ListView>
             </Grid>
             <Grid Grid.Column="1" Background="White">
@@ -107,7 +107,7 @@
                                 <TextBlock Text="" x:Name="tableId" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 220 3"/>
                                 <TextBlock Text="번 테이블의 주문 내역" FontSize="20" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-                                <Button x:Name="allClear" Click="AllClear_Click" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 8 0" >전체삭제</Button> 
+                                <Button x:Name="allClear" Click="AllClear_Click" Width="90" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 8 0" >전체삭제</Button>
                                 <Border BorderBrush="#212121" Opacity="0.45" BorderThickness="0 0 0 1"/>
                             </Grid>
 
@@ -132,9 +132,9 @@
                                 </Border>
                             </Grid>
                         </Grid>
-                        
+
                         <Border BorderBrush="#212121" BorderThickness="0 0 0 4"/>
-                        
+
                         <ListView x:Name="selectedDrink" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
@@ -186,10 +186,21 @@
                         </Grid>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <Grid Grid.Row="0">
+                            <Border BorderBrush="#212121" BorderThickness="0 0 0 2" Grid.Row="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="0" Text="최근 주문시간 : " VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold"/>
+                                    <TextBlock Grid.Column="1" x:Name="lastOrderTime" Text="" FontSize="14" FontWeight="DemiBold" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Border>
+                            <Grid Grid.Row="1">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
@@ -197,7 +208,7 @@
                                 <TextBlock Grid.Column="0" Text="총 합계 : " VerticalAlignment="Center" Margin="20 0 0 0" FontSize="25" FontWeight="DemiBold"/>
                                 <TextBlock Grid.Column="1" x:Name="totalPrice" Text="" FontSize="25" FontWeight="DemiBold" VerticalAlignment="Center"/>
                             </Grid>
-                            <Border BorderBrush="#212121" BorderThickness="0 2 0 0" Grid.Row="1">
+                            <Border BorderBrush="#212121" BorderThickness="0 2 0 0" Grid.Row="2">
                                 <Grid>
                                     <TextBlock Text="결제 수단 :" Margin="10 0 0 0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
                                     <StackPanel Orientation="Horizontal">
@@ -207,7 +218,7 @@
                                 </Grid>
                             </Border>
                         </Grid>
-                        
+
                     </Grid>
                 </Border>
             </Grid>
