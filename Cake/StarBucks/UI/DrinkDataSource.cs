@@ -74,13 +74,12 @@ namespace StarBucks
                 listDrink[i].Category = "피지오";
             }
         }
-        public List<Drink> GetCategoryList(string a)
+        public List<Drink> GetCategoryList(string category) // cateory를 받아와서 listDrink에 category가 일치하는 item들만 리턴
         {
             if (listDrink == null)
                 return null;
 
-            //listTest.Clear();
-            return listDrink.Where(x => x.Category.Equals(a)).ToList();
+            return listDrink.Where(x => x.Category.Equals(category)).ToList();
         }
     }
 }
