@@ -29,7 +29,7 @@ namespace StarBucks.UI
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            StartTime();
+            StartTime(); //실시간 시간
             AddSeatitems();
         }
 
@@ -75,6 +75,7 @@ namespace StarBucks.UI
 
             lstSeat.SelectedIndex = -1;
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try
