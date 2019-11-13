@@ -7,19 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <Style x:Key="OrderedNameStyle" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="OrderedPriceStyle" TargetType="TextBlock">
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-        </Style>
-        <Style x:Key="OrderedCountStyle" TargetType="TextBlock">
+        <Style x:Key="OrderedTbStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
@@ -153,13 +141,13 @@
                                                 <Button x:Name="selectClear" Click="SelectRemove_Click" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Center">X</Button>
                                             </Grid>
                                             <Grid Grid.Column="1">
-                                                <TextBlock Text="{Binding Name}" Style="{StaticResource OrderedNameStyle}"></TextBlock>
+                                                <TextBlock Text="{Binding Name}" Style="{StaticResource OrderedTbStyle}"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="2">
-                                                <TextBlock Text="{Binding Price}" Style="{StaticResource OrderedPriceStyle}"></TextBlock>
+                                                <TextBlock Text="{Binding Price}" Style="{StaticResource OrderedTbStyle}"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="3">
-                                                <TextBlock Text="{Binding Count}" Style="{StaticResource OrderedCountStyle}"></TextBlock>
+                                                <TextBlock Text="{Binding Count}" Style="{StaticResource OrderedTbStyle}"></TextBlock>
                                             </Grid>
                                             <Grid Grid.Column="4">
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
