@@ -19,6 +19,12 @@
             <Setter Property="FontSize" Value="11"/>
             <Setter Property="Margin" Value="0 0 0 4"/>
         </Style>
+        <Style x:Key="PayBtnStyle" TargetType="Button">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -202,13 +208,12 @@
                                 <Grid>
                                     <TextBlock Text="결제 수단 :" Margin="10 0 0 0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="cash" Click="CashCardPay" Width="70" Height="30" Margin="130 0 0 0" FontSize="15" FontWeight="DemiBold">현금</Button>
-                                        <Button x:Name="card" Click="CashCardPay" Width="70" Height="30" Margin="15 0 0 0" FontSize="15" FontWeight="DemiBold">카드</Button>
+                                        <Button x:Name="cash" Click="CashCardPay" Margin="130 0 0 0" Style="{StaticResource PayBtnStyle}">현금</Button>
+                                        <Button x:Name="card" Click="CashCardPay" Margin="15 0 0 0" Style="{StaticResource PayBtnStyle}">카드</Button>
                                     </StackPanel>
                                 </Grid>
                             </Border>
                         </Grid>
-
                     </Grid>
                 </Border>
             </Grid>
