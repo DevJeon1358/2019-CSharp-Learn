@@ -87,7 +87,6 @@
                             <WrapPanel Orientation="Horizontal" />
                         </ItemsPanelTemplate>
                     </ListView.ItemsPanel>
-
                 </ListView>
             </Grid>
             <Grid Grid.Column="1" Background="White">
@@ -215,8 +214,8 @@
                                 <Grid>
                                     <TextBlock Text="결제 수단 :" Margin="10 0 0 0" FontSize="20" FontWeight="Bold" VerticalAlignment="Center"/>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Click="CashPay" Width="70" Height="30" Margin="130 0 0 0" FontSize="15" FontWeight="DemiBold">현금</Button>
-                                        <Button Click="CardPay" Width="70" Height="30" Margin="15 0 0 0" FontSize="15" FontWeight="DemiBold">카드</Button>
+                                        <Button x:Name="cash" Click="CashCardPay" Width="70" Height="30" Margin="130 0 0 0" FontSize="15" FontWeight="DemiBold">현금</Button>
+                                        <Button x:Name="card" Click="CashCardPay" Width="70" Height="30" Margin="15 0 0 0" FontSize="15" FontWeight="DemiBold">카드</Button>
                                     </StackPanel>
                                 </Grid>
                             </Border>
