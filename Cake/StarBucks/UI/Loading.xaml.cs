@@ -11,8 +11,6 @@ namespace StarBucks.UI
     /// </summary>
     public partial class Loading : Window
     {
-        login loginWindow = new login();
-
         public Loading()
         {
             InitializeComponent();
@@ -21,7 +19,6 @@ namespace StarBucks.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Task.Run(delegate {
-                Thread.Sleep(3000);
                 OpenLoginWindow();
             });
         }
@@ -30,6 +27,9 @@ namespace StarBucks.UI
         {
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(delegate
             {
+                var loginWindow = new login();
+                App.login = loginWindow;
+
                 loginWindow.Show();
                 this.Close();
             }));

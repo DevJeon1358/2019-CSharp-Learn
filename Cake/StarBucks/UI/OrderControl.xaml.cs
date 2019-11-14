@@ -215,8 +215,17 @@ namespace StarBucks
                 }
 
                 // Analytics Window의 Data 를 Refresh 함
-                App.analytics.RefreshData();
+                App.analytics?.RefreshData();
 
+                if(paymentMethod == payments.paymentMethod.CARD)
+                {
+                    App.socketController?.sendMessage("@" + App.loginID + "#[스타벅스 실시간 결제 알림]\n결제 수단: 카드\n결제 금액:" + SetTotalPrice().ToString());
+                }
+                else
+                {
+                    App.socketController?.sendMessage("@" + App.loginID + "#[스타벅스 실시간 결제 알림]\n결제 수단: 현금\n결제 금액:" + SetTotalPrice().ToString());
+                }
+                
                 BackHome();
             }
         }

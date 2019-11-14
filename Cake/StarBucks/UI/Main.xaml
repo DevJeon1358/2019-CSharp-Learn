@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StarBucks.UI"
         xmlns:local1="clr-namespace:StarBucks"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="Main" Height="800" Width="1400">
+        Title="Main" Height="800" Width="1400" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>
@@ -25,12 +25,27 @@
                         />
             </StackPanel>
 
-            <TextBlock 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Width="auto">
+                <TextBlock 
                 Name="dClock" 
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right"
+                TextAlignment="Right"
                 Foreground="#efefef"
                 Margin="0,0,10,0"/>
+
+                <TextBlock 
+                Cursor="Hand"
+                Name="changeOnline" 
+                MouseDown="ChangeOnline_MouseDown"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                FontWeight="Bold"
+                FontSize="10pt"
+                Foreground="CadetBlue"
+                Text="온라인 전환"
+                Margin="0,0,10,0"/>
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1" Background="#212121">
