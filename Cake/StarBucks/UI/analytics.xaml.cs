@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using LiveCharts;
@@ -23,7 +22,8 @@ namespace StarBucks
         private Boolean todayBackgroundWorkerFinished = false;
         private Boolean categoryBackgroundWorkerFinished = false;
         private int todayAmount = 0;
-
+        private bool connectedToServer = true;
+        private notify notify;
         #endregion
 
         public analytics()
@@ -35,6 +35,65 @@ namespace StarBucks
 
             // 차트 초기 설정
             InitBaseChart();
+
+            if(App.socketController != null)
+            {
+                var sockInstance = App.socketController.GetSocketInstance();
+                App.socketController.lostEvent += SocketController_lostEvent;
+                App.socketController.connectEvent += SocketController_connectEvent;
+
+                notify = new notify(this, ToastNotifications.Position.Corner.BottomCenter);
+
+                if (sockInstance.Connected)
+                {
+                    this.sendTodayAmount.IsEnabled = true;
+                }
+                else
+                {
+                    // 오프라인 모드
+                    this.sendTodayAmount.IsEnabled = false;
+                }
+            }
+            else
+            {
+                // 오프라인 모드
+                this.sendTodayAmount.IsEnabled = false;
+            }
+        }
+
+        private void SocketController_connectEvent(object sender, Network.connectedArgs e)
+        {
+            if(e.connected == true)
+            {
+                App.Current.Dispatcher.Invoke(new Action(delegate
+                {
+                    notify.Send_Reconnected_Message();
+                    this.sendTodayAmount.IsEnabled = true;
+                    connectedToServer = true;
+                }));
+            }
+            else
+            {
+                var socketInstance = App.socketController?.GetSocketInstance();
+                if (socketInstance.reconnectAttempt > 10)
+                {
+                    App.Current.Dispatcher.Invoke(new Action(delegate
+                    {
+                        connectedToServer = false;
+                        this.sendTodayAmount.IsEnabled = false;
+                    }));
+                }
+            }
+        }
+
+        private void SocketController_lostEvent(object sender, Network.lostConnectionArgs e)
+        {
+            App.Current.Dispatcher.Invoke(new Action(delegate
+            {
+                notify.Send_Disconnected_Message();
+                this.sendTodayAmount.IsEnabled = false;
+                connectedToServer = false;
+            }));
         }
 
         #region Statics
@@ -438,7 +497,18 @@ namespace StarBucks
 
         private void SendTodayAmount_Click(object sender, RoutedEventArgs e)
         {
-            App.socketController.sendMessage("@" + App.loginID + "#오늘 판매량:" + todayAmount.ToString());
+            if(connectedToServer == false)
+            {
+                MessageBox.Show("서버와 연결이 끊긴 상태입니다. 다시 연결되면 자동으로 전송해드리겠습니다.");
+            }
+
+            App.socketController.sendMessage("@All" + "#스타벅스 오늘 판매량:" + todayAmount.ToString() + "원");
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            this.Close();
+            notify?.Dispose();
         }
     }
 }
