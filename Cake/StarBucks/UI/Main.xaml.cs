@@ -100,13 +100,7 @@ namespace StarBucks.UI
         {
             // 주문이 완료됨
             int idx = args.id;
-
-            //만약 id와 주문목록 리스트가 넘어온다면
-            //var item = App.SeatData.lstSeat.Where(x => x.Id == idx).FirstOrDefault();
-
-            //item.lstDrink = args.orderedDrinks;
-
-            //id만 넘어오는경우 = 오더쪽에서 데이터처리를 다해주는 경우
+            //Seat 주문내역 갱신?!업데이트?!
             App.SeatData.lstSeat.Where(x => x.Id == idx).FirstOrDefault().lstDrink = args.orderedDrinks;
 
             lstSeat.Items.Clear();
@@ -115,10 +109,8 @@ namespace StarBucks.UI
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            App.SeatData.Load();
-
+            StartTime(); //실시간 시간
             AddSeatitems();
-            StartTime();
         }
 
         private void AddSeatitems()
@@ -158,19 +150,19 @@ namespace StarBucks.UI
             {
                 return;
             }
-            SeatControl seatControl = lstSeat.SelectedItem as SeatControl; //선택된 SeatCtrl에서 
+
+            SeatControl seatControl = lstSeat.SelectedItem as SeatControl; //선택된 SeatCtrl에 
             int id = seatControl.GetSeatId(); // seat id를 가져오기
 
             //OrderControl 보이기
             orderControl.Visibility = Visibility.Visible;
 
-            // Table 번호
+            // Seat 번호 order에 넘기기? order에 설정하기?
             orderControl.SetSeatIdOnOrder(id);
-            //var item = App.SeatData.lstSeat.Where(x => x.Id == id).FirstOrDefault();
-            //orderControl.setOrderList(item.lstDrink);
 
             lstSeat.SelectedIndex = -1;
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try

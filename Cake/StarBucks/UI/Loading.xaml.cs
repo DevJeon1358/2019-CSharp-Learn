@@ -19,6 +19,7 @@ namespace StarBucks.UI
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             Task.Run(delegate {
+                App.SeatData.Load(); //seatData로드
                 OpenLoginWindow();
             });
         }
