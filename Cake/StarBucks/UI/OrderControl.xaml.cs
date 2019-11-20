@@ -170,10 +170,15 @@ namespace StarBucks
             return menuList;
         }
 
+        private Boolean PayMessage(String menuList)
+        {
+            return MessageBox.Show(menuList + "결제하시겠습니까?", SetTotalPrice().ToString() + " 원 ", MessageBoxButton.YesNo) == MessageBoxResult.Yes;
+        }
+
         private void AddPayment(List<Drink> OrderedDrink, payments.paymentMethod paymentMethod)
         {
             string menuList = OrderedDrinkListString(OrderedDrink);
-            if (MessageBox.Show(menuList + "결제하시겠습니까?", SetTotalPrice().ToString() + " 원 ", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (PayMessage(menuList))
             {
                 // DB에 값 전달(이름,카테고리,결제타입,결제금액,결제시간)
                 foreach (Drink drink in OrderedDrink) 
