@@ -172,6 +172,11 @@ namespace StarBucks
 
         private Boolean PayMessage(String menuList)
         {
+            if (menuList == "")
+            {
+                MessageBox.Show("결제 내역이 없습니다.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
             return MessageBox.Show(menuList + "결제하시겠습니까?", SetTotalPrice().ToString() + " 원 ", MessageBoxButton.YesNo) == MessageBoxResult.Yes;
         }
 
@@ -201,7 +206,7 @@ namespace StarBucks
                 {
                     App.socketController?.sendMessage("@" + App.loginID + "#[스타벅스 실시간 결제 알림]\n결제 수단: 현금\n결제 금액:" + SetTotalPrice().ToString());
                 }
-                
+
                 BackHome();
             }
         }
