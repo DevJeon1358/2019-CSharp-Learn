@@ -10,18 +10,28 @@
         <Style x:Key="TestStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="32"/>
-            <Setter Property="Foreground" Value="MidnightBlue"/>
             <Setter Property="Width" Value="340"/>
             <Setter Property="Background" Value="#333333"/>
             <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="Padding" Value="20,0,0,0"/>
         </Style>
     </UserControl.Resources>
 
     <Grid Width="340" Height="400" Margin="20,20,20,20">
-        <StackPanel Background="#f6f5ef"
-                    HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="46"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0">
             <TextBlock  x:Name="tbId"
                         Style="{StaticResource TestStyle}"/>
-        </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Background="#f6f5ef">
+            <StackPanel VerticalAlignment="Center"
+                        x:Name="contentGrid">
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

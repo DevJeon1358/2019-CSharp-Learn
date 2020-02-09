@@ -10,7 +10,19 @@ namespace StarBucks.Core
     {
         public int Id { get; set; }
 
-        public List<Drink> lstDrink = new List<Drink>();
+        private List<Drink> _lstDrink = new List<Drink>();
+
+        public List<Drink> lstDrink
+        {
+            get
+            {
+                return _lstDrink;
+            }
+            set
+            {
+                _lstDrink = value;
+            }
+        }
 
         public string OrderTime { get; set; }
     }

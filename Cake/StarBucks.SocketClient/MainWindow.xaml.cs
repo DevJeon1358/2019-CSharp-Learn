@@ -1,4 +1,4 @@
-﻿using StarBucks.Core;
+﻿using StarBucks.Network;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,24 +14,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace StarBucks
+namespace StarBucks.SocketClient
 {
     /// <summary>
-    /// Interaction logic for SeatControl.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SeatControl : UserControl
+    public partial class MainWindow : Window
     {
-        private Seat seat = new Seat();
-
-        public SeatControl()
+        static socket networkClient;
+        public MainWindow()
         {
             InitializeComponent();
         }
 
-        public void Setseat(Seat item)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            seat = item;
-            tbId.Text = seat.Id.ToString();
+            networkClient = new socket(this.server.Text.Split(':')[0], Convert.ToInt32(this.server.Text.Split(':')[1]));
+            networkClient.sendMessage("@" + this.id.Text);
         }
     }
 }

@@ -13,5 +13,17 @@ namespace StarBucks.Core
         public int Count { get; set; }
         public String ImagePath { get; set; }
         public String Category { get; set; }
+
+        public Drink Clone()
+        {
+            var retval = new Drink();
+            retval.Category = this.Category;
+            retval.Price = this.Price;
+            retval.Count = this.Count;
+            retval.ImagePath = this.ImagePath;
+            retval.Name = this.Name;
+
+            return retval;
+        }
     }
 }

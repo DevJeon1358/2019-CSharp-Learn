@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StarBucks.UI"
+        xmlns:local1="clr-namespace:StarBucks"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-        Title="Main" Height="800" Width="1400">
+        Title="Main" Height="800" Width="1400" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="90"/>
@@ -17,21 +18,42 @@
                 <Image Source="Assets/logo.png"
                        Margin="10,0,0,0"
                        Width="70"/>
+
+                <Button Width="100"
+                        Margin="30,20"
+                        Content="통계보기" Click="Button_Click"
+                        />
             </StackPanel>
 
-            <TextBlock 
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Width="auto">
+                <TextBlock 
                 Name="dClock" 
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right"
+                TextAlignment="Right"
                 Foreground="#efefef"
                 Margin="0,0,10,0"/>
+
+                <TextBlock 
+                Cursor="Hand"
+                Name="changeOnline" 
+                MouseDown="ChangeOnline_MouseDown"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                FontWeight="Bold"
+                FontSize="10pt"
+                Foreground="CadetBlue"
+                Text="온라인 전환"
+                Margin="0,0,10,0"/>
+            </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Background="#212121">
             
             <ListView x:Name="lstSeat"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                      HorizontalAlignment="Center" VerticalAlignment="Center">
+                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                      SelectionChanged="LstSeat_SelectionChanged">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"/>
@@ -40,6 +62,10 @@
             </ListView>
             
         </Grid>
-        
+
+        <local1:OrderControl x:Name="orderControl"
+                             Grid.Row="0" Grid.RowSpan="2"
+                             Visibility="Collapsed"/>
+        <!--Grid.Row만 활성화하고 Row 2개를 합쳐!! -->
     </Grid>
 </Window>

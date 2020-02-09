@@ -32,7 +32,7 @@ namespace StarBucks.Database
         /// SQL Connection을 초기화합니다.
         /// </summary>
         /// <returns>Current Connection</returns>
-        public SQLiteConnection initConnection()
+        public SQLiteConnection InitConnection()
         {
             String filePath = Directory.GetCurrentDirectory() + @"\Database.sqlite";
             if (!File.Exists(filePath))
